@@ -45,19 +45,18 @@ const Register: FC = () => {
           />
           <label htmlFor="floatingPassword">Password confirmation</label>
         </div>
-        <div className="row align-items-center mb-3">
-          <div className="col-3">
-            <label htmlFor="profilePicture">Profile picture</label>
-          </div>
-          <div className="col">
-            <input
-              type="file"
-              className="form-control"
-              placeholder="Username"
-              aria-label="Username"
-              aria-describedby="basic-addon1"
-            />
-          </div>
+        <div className="mb-3">
+          <label htmlFor="profilePicture" className="btn border w-100 p-3">
+            Choose a profile picture
+          </label>
+          <input
+            type="file"
+            className="form-control d-none"
+            id="profilePicture"
+            placeholder="profilePicture"
+            aria-label="profilePicture"
+            aria-describedby="basic-addon1"
+          />
         </div>
         <p className="text-danger mb-3 opacity-0">.</p>
         <button className="btn btn-primary btn-lg w-100 mb-3">Register</button>
@@ -71,7 +70,7 @@ const Register: FC = () => {
           <span style={{ fontSize: "smaller" }}>Continue with Google</span>
         </button>
       </form>
-      <p className="position-absolute bottom-0 mb-5">
+      <p className="position-absolute bottom-0 mb-3">
         Already have an account?{" "}
         <Link to="/login" className="text-decoration-none fw-bold">
           Login
