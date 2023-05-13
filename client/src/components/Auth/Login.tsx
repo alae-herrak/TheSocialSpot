@@ -1,10 +1,25 @@
-import { FC } from "react";
 import { Link } from "react-router-dom";
 import Layout from "./Layout";
+import { useGoogleLogin } from "@react-oauth/google";
 
 import GoogleLogo from "../../assets/images/google.png";
 
-const Login: FC = () => {
+const Login: React.FC = () => {
+  const login = useGoogleLogin({
+    onSuccess: (response) => {
+      const access_token = response.access_token;
+      fetch(
+        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${access_token}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+  });
+
   return (
     <Layout>
       <h2 className="mb-5">Hello again!</h2>
@@ -29,7 +44,13 @@ const Login: FC = () => {
         </div>
         <p className="text-danger mb-3 opacity-0">.</p>
         <button className="btn btn-primary btn-lg w-100 mb-3">Login</button>
-        <button className="btn btn-light btn-lg w-100 d-flex justify-content-center align-items-center">
+        <button
+          className="btn btn-light btn-lg w-100 d-flex justify-content-center align-items-center"
+          onClick={(e) => {
+            e.preventDefault();
+            login();
+          }}
+        >
           <img
             src={GoogleLogo}
             alt=""

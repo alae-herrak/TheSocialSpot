@@ -1,13 +1,12 @@
-import { LayoutProps } from "../../types";
-import { RootState } from "../../types";
+import { LayoutProps, RootState } from "../../types";
 import { useSelector, useDispatch } from "react-redux/es/exports";
+import { dark, light } from "../../redux/themeSlice";
 
 import Logo from "../../assets/images/logo.svg";
 import ThemeDarkToggle from "../../assets/images/theme-dark.png";
 import ThemeLightToggle from "../../assets/images/theme-light.png";
-import { dark, light } from "../../redux/themeSlice";
 
-const Layout = (props: LayoutProps) => {
+const Layout : React.FC<LayoutProps>= (props) => {
   const dispatch = useDispatch();
   const theme = useSelector((state: RootState) => state.theme.theme);
 

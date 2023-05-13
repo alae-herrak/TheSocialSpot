@@ -6,5 +6,3 @@ export const store = configureStore({
     theme: themeSlice,
   },
 });
-
-export type RootState = ReturnType<typeof store.getState>

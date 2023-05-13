@@ -9,18 +9,20 @@ import {
   updateEmail,
   updatePassword,
   updateProfilePicture,
+  updateTheme,
   updateUsername,
-} from "../Database/database.js";
+} from "../Database/user.js";
 
 export const _createUser = async (req, res) => {
   try {
-    const { username, email, password, profilePicture } = req.body;
+    const { username, email, password, profilePicture, theme } = req.body;
     const hashedPassword = bcrypt.hashSync(password, 13);
     const user = await createUser(
       username,
       email,
       hashedPassword,
-      profilePicture
+      profilePicture,
+      theme
     );
     res.send(user);
   } catch (error) {
@@ -50,6 +52,16 @@ export const _deleteUser = async (req, res) => {
   try {
     const result = await deleteUser(req.params.user_id);
     res.send(result);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const _updateTheme = async (req, res) => {
+  try {
+    const { user_id, theme } = req.body;
+    const updatedUser = await updateTheme(user_id, theme);
+    res.send(updatedUser);
   } catch (error) {
     res.send(error);
   }
