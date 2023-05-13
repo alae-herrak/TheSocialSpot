@@ -11,8 +11,9 @@ const Register: React.FC = () => {
   const theme = useSelector((state: RootState) => state.theme.theme);
   const noProfilePicture = import.meta.env.VITE_NO_PROFILE_PICTURE;
 
+  const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>(".");
-  const [username, setUsername] = useState<string>("");
+  const [fullName, setFullName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
@@ -36,30 +37,31 @@ const Register: React.FC = () => {
 
   const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     if (
-      username.trim() === "" ||
+      fullName.trim() === "" ||
       email.trim() === "" ||
       password.trim() === "" ||
       passwordConfirmation.trim() === ""
-    )
+    ) {
       setErrorMessage("All fields marked (*) are required");
-    else {
-      if (password !== passwordConfirmation)
+      setLoading(false);
+    } else {
+      if (password !== passwordConfirmation) {
         setErrorMessage("Passwords do not match");
-      else {
+        setLoading(false);
+      } else {
         getAllUsers().then((res) => {
-          const match: User[] = res.data.filter(
-            (item) => item.username === username || item.email === email
-          );
+          const match: User[] = res.data.filter((item) => item.email === email);
           if (match.length) {
-            if (match[0].username === username)
-              setErrorMessage("Username is already taken");
-            if (match[0].email === email)
+            if (match[0].email === email) {
               setErrorMessage("Email is already taken");
+              setLoading(false);
+            }
           } else {
             const user: User = {
               user_id: undefined,
-              username,
+              fullName,
               email,
               password,
               profilePicture,
@@ -70,6 +72,7 @@ const Register: React.FC = () => {
             createUser(user)
               .then((res) => console.log(res.data))
               .catch((err) => console.log(err));
+            setLoading(false);
           }
         });
       }
@@ -78,6 +81,11 @@ const Register: React.FC = () => {
 
   return (
     <Layout>
+      {loading && (
+        <div className="loader">
+          <div className="spinner-grow"></div>
+        </div>
+      )}
       <h2 className="mb-5">New herex ? Register now!</h2>
       <form onSubmit={handleRegister}>
         <div className="form-floating mb-3">
@@ -85,11 +93,11 @@ const Register: React.FC = () => {
             type="text"
             className="form-control"
             id="floatingInput1"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Full Name"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
           />
-          <label htmlFor="floatingInput1">Username *</label>
+          <label htmlFor="floatingInput1">Full Name *</label>
         </div>
         <div className="form-floating mb-3">
           <input

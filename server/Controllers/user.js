@@ -10,15 +10,15 @@ import {
   updatePassword,
   updateProfilePicture,
   updateTheme,
-  updateUsername,
+  updateFullName,
 } from "../Database/user.js";
 
 export const _createUser = async (req, res) => {
   try {
-    const { username, email, password, profilePicture, theme } = req.body;
+    const { fullName, email, password, profilePicture, theme } = req.body;
     const hashedPassword = bcrypt.hashSync(password, 13);
     const user = await createUser(
-      username,
+      fullName,
       email,
       hashedPassword,
       profilePicture,
@@ -67,10 +67,10 @@ export const _updateTheme = async (req, res) => {
   }
 };
 
-export const _updateUsername = async (req, res) => {
+export const _updateFullName = async (req, res) => {
   try {
-    const { user_id, username } = req.body;
-    const updatedUser = await updateUsername(user_id, username);
+    const { user_id, fullName } = req.body;
+    const updatedUser = await updateFullName(user_id, fullName);
     res.send(updatedUser);
   } catch (error) {
     res.send(error);

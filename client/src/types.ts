@@ -7,7 +7,7 @@ export type LayoutProps = {
 
 export type User = {
   user_id: number | undefined;
-  username: string;
+  fullName: string;
   email: string;
   password: string;
   profilePicture: string;

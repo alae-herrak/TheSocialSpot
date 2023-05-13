@@ -1,15 +1,15 @@
 import pool from "./database.js";
 
 export const createUser = async (
-  username,
+  fullName,
   email,
   password,
   profilePicture,
   theme
 ) => {
   const [result] = await pool.query(
-    `INSERT INTO users (username, email, password, profilePicture, state, role, theme) VALUES (?, ?, ?, ?, 'active', 'user', ?)`,
-    [username, email, password, profilePicture, theme]
+    `INSERT INTO users (fullName, email, password, profilePicture, state, role, theme) VALUES (?, ?, ?, ?, 'active', 'user', ?)`,
+    [fullName, email, password, profilePicture, theme]
   );
   const user_id = result.insertId;
   return getUserById(user_id);
@@ -45,10 +45,10 @@ export const updateTheme = async (user_id, theme) => {
   return getUserById(user_id);
 };
 
-export const updateUsername = async (user_id, username) => {
+export const updateFullName = async (user_id, fullName) => {
   const [result] = await pool.query(
-    `UPDATE users SET username = ? WHERE user_id = ?`,
-    [username, user_id]
+    `UPDATE users SET fullName = ? WHERE user_id = ?`,
+    [fullName, user_id]
   );
   return getUserById(user_id);
 };

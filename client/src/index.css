@@ -47,3 +47,19 @@
 .modal-backdrop {
   z-index: auto;
 }
+.loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #00000059;
+  height: 100vh;
+  width: 100vw;
+  z-index: 9999;
+}
+.spinner-grow {
+  width: 5rem;
+  height: 5rem;
+}
