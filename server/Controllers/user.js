@@ -11,6 +11,7 @@ import {
   updateProfilePicture,
   updateTheme,
   updateFullName,
+  getUserByEmail,
 } from "../Database/user.js";
 
 export const _createUser = async (req, res) => {
@@ -42,6 +43,15 @@ export const _getAllUsers = async (req, res) => {
 export const _getUserById = async (req, res) => {
   try {
     const user = await getUserById(req.params.user_id);
+    res.send(user);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const _getUserByEmail = async (req, res) => {
+  try {
+    const user = await getUserByEmail(req.params.email);
     res.send(user);
   } catch (error) {
     res.send(error);
@@ -123,6 +133,20 @@ export const _unblockUser = async (req, res) => {
     const { user_id } = req.body;
     const unblockedUser = await unblockUser(user_id);
     res.send(unblockedUser);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const _checkLogin = async (req, res) => {
+  try {
+    const { email, password } = req.query;
+    const user = await getUserByEmail(email);
+    if (!user) res.send(false);
+    else {
+      const isValid = bcrypt.compareSync(password, user.password);
+      res.send(isValid ? user : isValid);
+    }
   } catch (error) {
     res.send(error);
   }

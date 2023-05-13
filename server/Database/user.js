@@ -30,6 +30,14 @@ export const getUserById = async (user_id) => {
   return result[0];
 };
 
+export const getUserByEmail = async (emeail) => {
+  const [result] = await pool.query(
+    `SELECT * FROM users WHERE role = 'user' AND email = ?`,
+    [emeail]
+  );
+  return result[0];
+};
+
 export const deleteUser = async (user_id) => {
   const [result] = await pool.query(`DELETE FROM users WHERE user_id = ?`, [
     user_id,

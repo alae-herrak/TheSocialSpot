@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Layout from "./Layout";
+import { createUser, getAllUsers } from "../../api/user";
+import { GoogleUser, RootState, User } from "../../types";
+import { useGoogleLogin } from "@react-oauth/google";
+import { getGoogleUserInfo } from "../../api/googleOAuth";
 
 import GoogleLogo from "../../assets/images/google.png";
-import { createUser, getAllUsers } from "../../api/user";
-import { useSelector } from "react-redux";
-import { RootState, User } from "../../types";
 
 const Register: React.FC = () => {
   const theme = useSelector((state: RootState) => state.theme.theme);
@@ -54,10 +56,8 @@ const Register: React.FC = () => {
         getAllUsers().then((res) => {
           const match: User[] = res.data.filter((item) => item.email === email);
           if (match.length) {
-            if (match[0].email === email) {
-              setErrorMessage("Email is already taken");
-              setLoading(false);
-            }
+            setErrorMessage("Email is already taken");
+            setLoading(false);
           } else {
             const user: User = {
               user_id: undefined,
@@ -69,15 +69,68 @@ const Register: React.FC = () => {
               role: undefined,
               theme,
             };
+            setLoading(true);
             createUser(user)
-              .then((res) => console.log(res.data))
-              .catch((err) => console.log(err));
-            setLoading(false);
+              .then((res) => {
+                console.log(res.data);
+                setLoading(false);
+              })
+              .catch((err) => {
+                console.log(err);
+                setLoading(false);
+              });
           }
         });
       }
     }
   };
+
+  const GoogleLogin = useGoogleLogin({
+    onSuccess: (response) => {
+      const access_token = response.access_token;
+      setLoading(true);
+      getGoogleUserInfo(access_token)
+        .then((res) => {
+          const GoogleUser: GoogleUser = res.data;
+          getAllUsers().then((res) => {
+            const match: User[] = res.data.filter(
+              (item) => item.email === GoogleUser.email
+            );
+            if (match.length) {
+              setErrorMessage("Email is already taken");
+              setLoading(false);
+            } else {
+              const user: User = {
+                user_id: parseInt(GoogleUser.id),
+                fullName: GoogleUser.name,
+                email: GoogleUser.email,
+                password: "",
+                profilePicture: GoogleUser.picture,
+                state: undefined,
+                role: undefined,
+                theme,
+              };
+              setLoading(true);
+              createUser(user)
+                .then((res) => {
+                  console.log(res.data);
+                  setLoading(false);
+                })
+                .catch((err) => {
+                  console.log(err);
+                  setLoading(false);
+                });
+            }
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    onError: (error) => {
+      console.error(error.error_description);
+    },
+  });
 
   return (
     <Layout>
@@ -86,7 +139,7 @@ const Register: React.FC = () => {
           <div className="spinner-grow"></div>
         </div>
       )}
-      <h2 className="mb-5">New herex ? Register now!</h2>
+      <h2 className="mb-5">New here? Register now!</h2>
       <form onSubmit={handleRegister}>
         <div className="form-floating mb-3">
           <input
@@ -173,7 +226,11 @@ const Register: React.FC = () => {
           {errorMessage}
         </p>
         <button className="btn btn-primary btn-lg w-100 mb-3">Register</button>
-        <button className="btn btn-light btn-lg w-100 d-flex justify-content-center align-items-center">
+        <button
+          type="button"
+          className="btn btn-light btn-lg w-100 d-flex justify-content-center align-items-center"
+          onClick={() => GoogleLogin()}
+        >
           <img
             src={GoogleLogo}
             alt=""

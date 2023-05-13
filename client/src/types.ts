@@ -1,5 +1,5 @@
 import { store } from "./store";
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>;
 
 export type LayoutProps = {
   children: React.ReactNode;
@@ -14,4 +14,15 @@ export type User = {
   state: string | undefined;
   role: string | undefined;
   theme: string;
+};
+
+export type GoogleUser = {
+  email: string;
+  family_name: string;
+  given_name: string;
+  id: string;
+  locale: string;
+  name: string;
+  picture: string;
+  verified_email: boolean;
 };

@@ -11,3 +11,13 @@ export const createUser = async (User: User) => {
 export const getAllUsers = async () => {
   return axios.get<User[]>(URL);
 };
+
+export const getUserByEmail = async (email: string) => {
+  return await axios.get<User>(`${URL}/email/${email}`);
+};
+
+export const checkLogin = async (email: string, password: string) => {
+  return await axios.get<User | boolean>(
+    `${URL}/checkLogin/?email=${email}&password=${password}`
+  );
+};

@@ -1,9 +1,11 @@
 import express from "express";
 import {
   _blockUser,
+  _checkLogin,
   _createUser,
   _deleteUser,
   _getAllUsers,
+  _getUserByEmail,
   _getUserById,
   _unblockUser,
   _updateEmail,
@@ -11,7 +13,6 @@ import {
   _updatePassword,
   _updateProfilePicture,
   _updateTheme,
-  
 } from "../Controllers/user.js";
 const router = express.Router();
 
@@ -21,6 +22,8 @@ router.post("/", _createUser);
 // GET Requests
 router.get("/", _getAllUsers);
 router.get("/user_id/:user_id", _getUserById);
+router.get("/email/:email", _getUserByEmail);
+router.get("/checkLogin", _checkLogin);
 
 // PATCH Requests
 router.patch("/update/theme", _updateTheme);
