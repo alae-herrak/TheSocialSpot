@@ -1,7 +1,7 @@
-import { LayoutProps, RootState } from "../../types";
 import { useSelector, useDispatch } from "react-redux/es/exports";
-import { dark, light } from "../../redux/themeSlice";
 
+import { LayoutProps, RootState } from "../../types";
+import { dark, light } from "../../redux/themeSlice";
 import Logo from "../../assets/images/logo.svg";
 import ThemeDarkToggle from "../../assets/images/theme-dark.png";
 import ThemeLightToggle from "../../assets/images/theme-light.png";

@@ -1,17 +1,24 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import Layout from "./Layout";
+import { Link, Navigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
-import { getGoogleUserInfo } from "../../api/googleOAuth";
-import { GoogleUser, RootState, User } from "../../types";
-import { checkLogin, createUser, getUserByEmail } from "../../api/user";
 import { useSelector } from "react-redux";
 
+import Layout from "./Layout";
+import { getGoogleUserInfo } from "../../api/googleOAuth";
+import { GoogleUser, RootState, User } from "../../types";
+import {
+  checkLogin,
+  createUser,
+  getUserByEmail,
+  updateFullName,
+  updateProfilePicture,
+} from "../../api/user";
 import GoogleLogo from "../../assets/images/google.png";
 
 const Login: React.FC = () => {
   const theme = useSelector((state: RootState) => state.theme.theme);
 
+  const [navigate, setNavigate] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>(".");
   const [email, setEmail] = useState<string>("");
@@ -31,7 +38,7 @@ const Login: React.FC = () => {
           if (!res.data) {
             setErrorMessage("Email or password incorrect");
           } else {
-            console.log(res.data);
+            setNavigate(true);
           }
         })
         .catch((err) => {
@@ -63,7 +70,7 @@ const Login: React.FC = () => {
                 };
                 createUser(user)
                   .then((res) => {
-                    console.log(res.data);
+                    setNavigate(true);
                     setLoading(false);
                   })
                   .catch((err) => {
@@ -71,8 +78,14 @@ const Login: React.FC = () => {
                     setLoading(false);
                   });
               } else {
-                console.log(res.data);
+                try {
+                  updateFullName(res.data.user_id!, GoogleUser.name);
+                  updateProfilePicture(res.data.user_id!, GoogleUser.picture);
+                } catch (err) {
+                  console.log(err);
+                }
                 setLoading(false);
+                setNavigate(true);
               }
             })
             .catch((err) => {
@@ -88,6 +101,7 @@ const Login: React.FC = () => {
 
   return (
     <Layout>
+      {navigate && <Navigate to="/" />}
       {loading && (
         <div className="loader">
           <div className="spinner-grow"></div>

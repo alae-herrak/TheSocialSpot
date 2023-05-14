@@ -1,18 +1,19 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useGoogleLogin } from "@react-oauth/google";
+
 import Layout from "./Layout";
 import { createUser, getAllUsers } from "../../api/user";
 import { GoogleUser, RootState, User } from "../../types";
-import { useGoogleLogin } from "@react-oauth/google";
 import { getGoogleUserInfo } from "../../api/googleOAuth";
-
 import GoogleLogo from "../../assets/images/google.png";
 
 const Register: React.FC = () => {
   const theme = useSelector((state: RootState) => state.theme.theme);
   const noProfilePicture = import.meta.env.VITE_NO_PROFILE_PICTURE;
-
+  
+  const [navigate, setNavigate] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>(".");
   const [fullName, setFullName] = useState<string>("");
@@ -72,7 +73,7 @@ const Register: React.FC = () => {
             setLoading(true);
             createUser(user)
               .then((res) => {
-                console.log(res.data);
+                setNavigate(true)
                 setLoading(false);
               })
               .catch((err) => {
@@ -97,11 +98,13 @@ const Register: React.FC = () => {
               (item) => item.email === GoogleUser.email
             );
             if (match.length) {
-              setErrorMessage("Email is already taken");
+              setErrorMessage(
+                "Email already exists, if you are owner try logging in"
+              );
               setLoading(false);
             } else {
               const user: User = {
-                user_id: parseInt(GoogleUser.id),
+                user_id: undefined,
                 fullName: GoogleUser.name,
                 email: GoogleUser.email,
                 password: "",
@@ -113,7 +116,7 @@ const Register: React.FC = () => {
               setLoading(true);
               createUser(user)
                 .then((res) => {
-                  console.log(res.data);
+                  setNavigate(true)
                   setLoading(false);
                 })
                 .catch((err) => {
@@ -134,6 +137,7 @@ const Register: React.FC = () => {
 
   return (
     <Layout>
+      {navigate && <Navigate to="/" />}
       {loading && (
         <div className="loader">
           <div className="spinner-grow"></div>

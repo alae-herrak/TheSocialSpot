@@ -21,3 +21,19 @@ export const checkLogin = async (email: string, password: string) => {
     `${URL}/checkLogin/?email=${email}&password=${password}`
   );
 };
+
+export const updateFullName = async (user_id: number, fullName: string) => {
+  return await axios.patch<User>(`${URL}/update/fullname`, {
+    user_id,
+    fullName,
+  });
+};
+export const updateProfilePicture = async (
+  user_id: number,
+  profilePicture: string
+) => {
+  return await axios.patch<User>(`${URL}/update/fullname`, {
+    user_id,
+    profilePicture,
+  });
+};
