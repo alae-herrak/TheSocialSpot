@@ -111,7 +111,7 @@ const Login: React.FC = () => {
       <form onSubmit={handleLogin}>
         <div className="form-floating mb-3">
           <input
-            type="text"
+            type="email"
             className="form-control"
             id="floatingInput"
             placeholder="Email"

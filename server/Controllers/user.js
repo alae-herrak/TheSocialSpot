@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import {
   blockUser,
   createUser,
@@ -145,6 +146,7 @@ export const _checkLogin = async (req, res) => {
     if (!user) res.send(false);
     else {
       const isValid = bcrypt.compareSync(password, user.password);
+      const token = jwt.sign(user,)
       res.send(isValid ? user : isValid);
     }
   } catch (error) {
