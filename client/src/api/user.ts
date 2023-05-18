@@ -1,29 +1,37 @@
 import axios from "axios";
 
-import { User } from "../types";
+import { User, UserWithToken } from "../types";
 
-const URL = "http://localhost:5000/users";
+const BASE_URL = "http://localhost:5000/users";
+const API = axios.create({ baseURL: BASE_URL });
+
+API.interceptors.request.use((req) => {
+  if (localStorage.getItem("token")) {
+    req.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
+  }
+  return req;
+});
 
 export const createUser = async (User: User) => {
-  return await axios.post(URL, User);
+  return await API.post<UserWithToken>("/", User);
 };
 
 export const getAllUsers = async () => {
-  return axios.get<User[]>(URL);
+  return API.get<User[]>("/");
 };
 
 export const getUserByEmail = async (email: string) => {
-  return await axios.get<User>(`${URL}/email/${email}`);
+  return await API.get<UserWithToken>(`/email/${email}`);
 };
 
 export const checkLogin = async (email: string, password: string) => {
-  return await axios.get<User | boolean>(
-    `${URL}/checkLogin/?email=${email}&password=${password}`
+  return await API.get<UserWithToken>(
+    `/checkLogin/?email=${email}&password=${password}`
   );
 };
 
 export const updateFullName = async (user_id: number, fullName: string) => {
-  return await axios.patch<User>(`${URL}/update/fullname`, {
+  return await API.patch<User>(`/update/fullname`, {
     user_id,
     fullName,
   });
@@ -32,7 +40,7 @@ export const updateProfilePicture = async (
   user_id: number,
   profilePicture: string
 ) => {
-  return await axios.patch<User>(`${URL}/update/fullname`, {
+  return await API.patch<User>(`/update/fullname`, {
     user_id,
     profilePicture,
   });

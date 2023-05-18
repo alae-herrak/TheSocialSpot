@@ -26,7 +26,14 @@ export const _createUser = async (req, res) => {
       profilePicture,
       theme
     );
-    res.send(user);
+    const token = jwt.sign(
+      { email: user.email, user_id: user.user_id },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+    res.send({ user, token });
   } catch (error) {
     res.send(error);
   }
@@ -53,7 +60,15 @@ export const _getUserById = async (req, res) => {
 export const _getUserByEmail = async (req, res) => {
   try {
     const user = await getUserByEmail(req.params.email);
-    res.send(user);
+    if (!user) return res.send(false)
+    const token = jwt.sign(
+      { email: user.email, user_id: user.user_id },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+    res.send({ user, token });
   } catch (error) {
     res.send(error);
   }
@@ -146,8 +161,17 @@ export const _checkLogin = async (req, res) => {
     if (!user) res.send(false);
     else {
       const isValid = bcrypt.compareSync(password, user.password);
-      const token = jwt.sign(user,)
-      res.send(isValid ? user : isValid);
+      if (!isValid) res.send(isValid);
+      else {
+        const token = jwt.sign(
+          { email: user.email, user_id: user.user_id },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "1h",
+          }
+        );
+        res.send({ user, token });
+      }
     }
   } catch (error) {
     res.send(error);

@@ -26,3 +26,8 @@ export type GoogleUser = {
   picture: string;
   verified_email: boolean;
 };
+
+export type UserWithToken = {
+  user: User;
+  token: string;
+};

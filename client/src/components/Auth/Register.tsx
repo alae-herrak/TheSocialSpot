@@ -1,18 +1,21 @@
 import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useGoogleLogin } from "@react-oauth/google";
 
 import Layout from "./Layout";
-import { createUser, getAllUsers } from "../../api/user";
+import { createUser, getAllUsers, getUserByEmail } from "../../api/user";
 import { GoogleUser, RootState, User } from "../../types";
 import { getGoogleUserInfo } from "../../api/googleOAuth";
+import { login } from "../../redux/userSlice";
 import GoogleLogo from "../../assets/images/google.png";
+import { dark, light } from "../../redux/themeSlice";
 
 const Register: React.FC = () => {
+  const dispatch = useDispatch();
   const theme = useSelector((state: RootState) => state.theme.theme);
   const noProfilePicture = import.meta.env.VITE_NO_PROFILE_PICTURE;
-  
+
   const [navigate, setNavigate] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>(".");
@@ -73,8 +76,12 @@ const Register: React.FC = () => {
             setLoading(true);
             createUser(user)
               .then((res) => {
-                setNavigate(true)
                 setLoading(false);
+                const { user, token } = res.data;
+                localStorage.setItem("user", JSON.stringify(user));
+                localStorage.setItem("token", token);
+                dispatch(login());
+                setNavigate(true);
               })
               .catch((err) => {
                 console.log(err);
@@ -93,45 +100,51 @@ const Register: React.FC = () => {
       getGoogleUserInfo(access_token)
         .then((res) => {
           const GoogleUser: GoogleUser = res.data;
-          getAllUsers().then((res) => {
-            const match: User[] = res.data.filter(
-              (item) => item.email === GoogleUser.email
-            );
-            if (match.length) {
-              setErrorMessage(
-                "Email already exists, if you are owner try logging in"
-              );
+          getUserByEmail(GoogleUser.email)
+            .then((res) => {
+              if (!res.data) {
+                const user: User = {
+                  user_id: parseInt(GoogleUser.id),
+                  fullName: GoogleUser.name,
+                  email: GoogleUser.email,
+                  password: "",
+                  profilePicture: GoogleUser.picture,
+                  state: undefined,
+                  role: undefined,
+                  theme,
+                };
+                createUser(user)
+                  .then((res) => {
+                    setLoading(false);
+                    const { user, token } = res.data;
+                    localStorage.setItem("user", JSON.stringify(user));
+                    localStorage.setItem("token", token);
+                    dispatch(login());
+                    setNavigate(true);
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    setLoading(false);
+                  });
+              } else {
+                setLoading(false);
+                const { user, token } = res.data;
+                localStorage.setItem("user", JSON.stringify(user));
+                localStorage.setItem("token", token);
+                dispatch(user.theme === "light" ? light() : dark());
+                dispatch(login());
+                setNavigate(true);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
               setLoading(false);
-            } else {
-              const user: User = {
-                user_id: undefined,
-                fullName: GoogleUser.name,
-                email: GoogleUser.email,
-                password: "",
-                profilePicture: GoogleUser.picture,
-                state: undefined,
-                role: undefined,
-                theme,
-              };
-              setLoading(true);
-              createUser(user)
-                .then((res) => {
-                  setNavigate(true)
-                  setLoading(false);
-                })
-                .catch((err) => {
-                  console.log(err);
-                  setLoading(false);
-                });
-            }
-          });
+            });
         })
         .catch((error) => {
           console.error(error);
+          setLoading(false);
         });
-    },
-    onError: (error) => {
-      console.error(error.error_description);
     },
   });
 

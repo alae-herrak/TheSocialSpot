@@ -1,6 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { User } from "../types";
+
+const user: User = localStorage.getItem("user")
+  ? JSON.parse(localStorage.getItem("user")!)
+  : null;
+
 const initState = {
-  theme: "light",
+  theme: user?.theme || "dark",
 };
 
 const themeSlice = createSlice({

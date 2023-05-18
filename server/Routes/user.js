@@ -14,6 +14,7 @@ import {
   _updateProfilePicture,
   _updateTheme,
 } from "../Controllers/user.js";
+
 const router = express.Router();
 
 // POST Requests

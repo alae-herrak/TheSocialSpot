@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import Layout from "./Layout";
 import { getGoogleUserInfo } from "../../api/googleOAuth";
@@ -13,9 +13,12 @@ import {
   updateFullName,
   updateProfilePicture,
 } from "../../api/user";
+import { login } from "../../redux/userSlice";
 import GoogleLogo from "../../assets/images/google.png";
+import { dark, light } from "../../redux/themeSlice";
 
 const Login: React.FC = () => {
+  const dispatch = useDispatch();
   const theme = useSelector((state: RootState) => state.theme.theme);
 
   const [navigate, setNavigate] = useState<boolean>(false);
@@ -38,6 +41,11 @@ const Login: React.FC = () => {
           if (!res.data) {
             setErrorMessage("Email or password incorrect");
           } else {
+            const { user, token } = res.data;
+            localStorage.setItem("user", JSON.stringify(user));
+            localStorage.setItem("token", token);
+            dispatch(user.theme === "light" ? light() : dark());
+            dispatch(login());
             setNavigate(true);
           }
         })
@@ -70,21 +78,24 @@ const Login: React.FC = () => {
                 };
                 createUser(user)
                   .then((res) => {
-                    setNavigate(true);
                     setLoading(false);
+                    const { user, token } = res.data;
+                    localStorage.setItem("user", JSON.stringify(user));
+                    localStorage.setItem("token", token);
+                    dispatch(login());
+                    setNavigate(true);
                   })
                   .catch((err) => {
                     console.log(err);
                     setLoading(false);
                   });
               } else {
-                try {
-                  updateFullName(res.data.user_id!, GoogleUser.name);
-                  updateProfilePicture(res.data.user_id!, GoogleUser.picture);
-                } catch (err) {
-                  console.log(err);
-                }
                 setLoading(false);
+                const { user, token } = res.data;
+                localStorage.setItem("user", JSON.stringify(user));
+                localStorage.setItem("token", token);
+                dispatch(user.theme === "light" ? light() : dark());
+                dispatch(login());
                 setNavigate(true);
               }
             })
@@ -95,6 +106,7 @@ const Login: React.FC = () => {
         })
         .catch((error) => {
           console.error(error);
+          setLoading(false);
         });
     },
   });

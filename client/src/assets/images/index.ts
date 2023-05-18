@@ -1,0 +1,11 @@
+export { default as NavLogo } from "./icons8-he-50.png";
+export { default as SearchIcon } from "./search-light.png";
+export { default as NotificationIcon } from "./notification-empty-light.png";
+export { default as ProfileDark } from "./user-dark.png";
+export { default as ProfileLight } from "./user-light.png";
+export { default as ThemeDark } from "./theme-dark.png";
+export { default as ThemeLight } from "./theme-light.png";
+export { default as SettingsDark } from "./settings-dark.png";
+export { default as SettingsLight } from "./settings-light.png";
+export { default as LogoutDark } from "./logout-dark.png";
+export { default as LogoutLight } from "./logout-light.png";
