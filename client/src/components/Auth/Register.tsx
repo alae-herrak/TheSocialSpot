@@ -218,7 +218,12 @@ const Register: React.FC = () => {
             <button
               type="button"
               className="btn btn-outline-danger ms-2 p-3"
-              onClick={() => setProfilePicture(noProfilePicture)}
+              onClick={() => {
+                setProfilePicture(noProfilePicture);
+                (
+                  document.getElementById("profilePicture") as HTMLInputElement
+                ).value = "";
+              }}
             >
               X
             </button>
