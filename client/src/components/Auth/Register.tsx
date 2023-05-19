@@ -206,11 +206,11 @@ const Register: React.FC = () => {
           <img
             src={profilePicture}
             alt=""
-            style={{ width: "15%", height: "15%" }}
+            style={{ width: "64px", height: "64px" }}
             className="img-fluid rounded-circle me-2"
           />
 
-          <label htmlFor="profilePicture" className="btn w-100 border p-3">
+          <label htmlFor="profilePicture" className="btn w-100 border p-2 p-sm-3">
             Choose a profile picture
           </label>
 
