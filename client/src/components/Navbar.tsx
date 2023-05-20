@@ -17,6 +17,7 @@ import {
   LogoutLight,
 } from "../assets/images";
 import { updateTheme } from "../api/user";
+import { Link } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
@@ -36,12 +37,12 @@ const Navbar: React.FC = () => {
       }`}
     >
       <div className="container">
-        <a className="navbar-brand d-flex align-items-center" href="#">
+        <Link to='/' className="navbar-brand d-flex align-items-center">
           <img src={NavLogo} alt="" className="width-2rem me-2" />
           <span className="d-none d-md-block">
             the<span className="fw-bold">SocialSpot</span>
           </span>
-        </a>
+        </Link>
         <div className="justify-content-end" id="navbarSupportedContent">
           <ul className="navbar-nav d-flex flex-row align-items-center">
             <li className="nav-item me-4">
@@ -155,13 +156,13 @@ const Navbar: React.FC = () => {
                         />
                         Theme
                       </button>
-                      <button className="text-decoration-none text-body nav-link d-flex align-items-center">
+                      <a href='/settings' className="text-decoration-none text-body nav-link d-flex align-items-center">
                         <img
                           src={theme === "light" ? SettingsDark : SettingsLight}
                           className="width-1-5rem me-2"
                         />
                         Settings
-                      </button>
+                      </a>
                       <a
                         href=""
                         className="text-decoration-none text-body nav-link d-flex align-items-center"

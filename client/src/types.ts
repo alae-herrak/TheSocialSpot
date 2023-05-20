@@ -31,3 +31,12 @@ export type UserWithToken = {
   user: User;
   token: string;
 };
+
+export type ProfileInformationProps = {
+  user: User | null,
+  theme: string
+}
+
+export type SettingsThemeProps = {
+  theme: string
+}
