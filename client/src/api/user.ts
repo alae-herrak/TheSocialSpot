@@ -7,7 +7,7 @@ const API = axios.create({ baseURL: BASE_URL });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
-    req.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
+    req.headers.Authorization = `${localStorage.getItem("token")}`;
   }
   return req;
 });
@@ -30,18 +30,19 @@ export const checkLogin = async (email: string, password: string) => {
   );
 };
 
-export const updateFullName = async (user_id: number, fullName: string) => {
+export const updateFullName = async (fullName: string) => {
   return await API.patch<User>(`/update/fullname`, {
-    user_id,
     fullName,
   });
 };
-export const updateProfilePicture = async (
-  user_id: number,
-  profilePicture: string
-) => {
+export const updateProfilePicture = async (profilePicture: string) => {
   return await API.patch<User>(`/update/fullname`, {
-    user_id,
     profilePicture,
+  });
+};
+
+export const updateTheme = async (theme: string) => {
+  return await API.patch("/update/theme", {
+    theme,
   });
 };

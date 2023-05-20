@@ -16,11 +16,18 @@ import {
   LogoutDark,
   LogoutLight,
 } from "../../assets/images";
+import { updateTheme } from "../../api/user";
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.user);
   const theme = useSelector((state: RootState) => state.theme.theme);
+
+  const handleUpdateTheme = () => {
+    updateTheme(theme === "dark" ? "light" : "dark")
+      .then((res) => localStorage.setItem("user", JSON.stringify(res.data)))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <nav
@@ -137,9 +144,10 @@ const Navbar: React.FC = () => {
                       </button>
                       <button
                         className="text-decoration-none text-body nav-link d-flex align-items-center"
-                        onClick={() =>
-                          dispatch(theme === "light" ? dark() : light())
-                        }
+                        onClick={() => {
+                          dispatch(theme === "light" ? dark() : light());
+                          handleUpdateTheme();
+                        }}
                       >
                         <img
                           src={theme === "light" ? ThemeDark : ThemeLight}

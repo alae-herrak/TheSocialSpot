@@ -14,6 +14,7 @@ import {
   _updateProfilePicture,
   _updateTheme,
 } from "../Controllers/user.js";
+import auth from '../middleware/auth.js'
 
 const router = express.Router();
 
@@ -27,7 +28,7 @@ router.get("/email/:email", _getUserByEmail);
 router.get("/checkLogin", _checkLogin);
 
 // PATCH Requests
-router.patch("/update/theme", _updateTheme);
+router.patch("/update/theme", auth, _updateTheme);
 router.patch("/update/fullName", _updateFullName);
 router.patch("/update/email", _updateEmail);
 router.patch("/update/password", _updatePassword);
