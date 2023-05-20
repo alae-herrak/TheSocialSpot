@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 
-import { logout } from "../../redux/userSlice";
-import { light, dark } from "../../redux/themeSlice";
-import { RootState } from "../../types";
+import { logout } from "../redux/userSlice";
+import { light, dark } from "../redux/themeSlice";
+import { RootState } from "../types";
 import {
   NavLogo,
   SearchIcon,
@@ -15,8 +15,8 @@ import {
   SettingsLight,
   LogoutDark,
   LogoutLight,
-} from "../../assets/images";
-import { updateTheme } from "../../api/user";
+} from "../assets/images";
+import { updateTheme } from "../api/user";
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
