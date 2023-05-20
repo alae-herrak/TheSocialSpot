@@ -6,7 +6,7 @@ import Logo from "../../assets/images/logo.svg";
 import ThemeDarkToggle from "../../assets/images/theme-dark.png";
 import ThemeLightToggle from "../../assets/images/theme-light.png";
 
-const Layout : React.FC<LayoutProps>= (props) => {
+const Layout: React.FC<LayoutProps> = (props) => {
   const dispatch = useDispatch();
   const theme = useSelector((state: RootState) => state.theme.theme);
 
@@ -37,7 +37,11 @@ const Layout : React.FC<LayoutProps>= (props) => {
             the<span className="fw-bold">SocialSpot</span>
           </h1>
         </div>
-        <div className="col-12 col-sm-9 col-md-6 d-flex flex-column align-items-center justify-content-center">
+        <div
+          className={`col-12 col-sm-9 col-md-6 d-flex flex-column align-items-center justify-content-center ${
+            theme === "light" ? "bg-white" : ""
+          }`}
+        >
           {props.children}
         </div>
       </div>
