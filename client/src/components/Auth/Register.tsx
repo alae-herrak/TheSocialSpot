@@ -243,7 +243,7 @@ const Register: React.FC = () => {
         <p
           className={`text-danger mb-3 ${
             errorMessage === "." ? "opacity-0" : ""
-          }`}
+           }`}
         >
           {errorMessage}
         </p>

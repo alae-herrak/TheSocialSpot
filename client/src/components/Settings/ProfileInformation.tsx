@@ -2,8 +2,36 @@ import { useState } from "react";
 import { ProfileInformationProps } from "../../types";
 
 const ProfileInformation = ({ user, theme }: ProfileInformationProps) => {
-  const [fullName, setFullName] = useState<string>(user?.fullName!);
-  const [email, setEmail] = useState<string>(user?.email!);
+  const noProfilePicture = import.meta.env.VITE_NO_PROFILE_PICTURE;
+
+  const [errorMessage, setErrorMessage] = useState<string>(".");
+  const [fullName, setFullName] = useState<string>(user!.fullName!);
+  const [email, setEmail] = useState<string>(user!.email!);
+  const [profilePicture, setProfilePicture] = useState<string>(
+    user?.profilePicture!
+  );
+
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          setProfilePicture(reader.result as string);
+        };
+      } else {
+        setErrorMessage("The file is not an image");
+      }
+    }
+  };
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (fullName===user!.fullName && email === user!.email && profilePicture===user!.profilePicture) {
+      setErrorMessage("No changes")
+    }
+  };
 
   return (
     <div
@@ -15,7 +43,7 @@ const ProfileInformation = ({ user, theme }: ProfileInformationProps) => {
       <p className="mb-4">
         Update your account's profile information and email address.
       </p>
-      <form>
+      <form className="settings-form" onSubmit={handleFormSubmit}>
         <label htmlFor="fullname" className="form-label fw-medium">
           Full Name
         </label>
@@ -38,7 +66,46 @@ const ProfileInformation = ({ user, theme }: ProfileInformationProps) => {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <p className="text-danger opacity-0">.</p>
+        <label htmlFor="profilePicture" className="form-label fw-medium">
+          Profile Picture
+        </label>
+        <div>
+          <img
+            src={profilePicture}
+            alt=""
+            width="64px"
+            className="img-fluid rounded-circle me-3"
+          />
+          <label
+            htmlFor="file"
+            className={`btn btn-outline-${
+              theme === "dark" ? "secondary" : "dark"
+            } p-3 me-3`}
+          >
+            Change Profile Picture
+          </label>
+          <button
+            type="button"
+            className={`btn btn-outline-danger p-3`}
+            onClick={() => setProfilePicture(noProfilePicture)}
+          >
+            X
+          </button>
+          <input
+            type="file"
+            className="d-none"
+            accept="image/*"
+            id="file"
+            onChange={handleFileInputChange}
+          />
+        </div>
+        <p
+          className={`text-danger mt-3 ${
+            errorMessage === "." ? "opacity-0" : ""
+          }`}
+        >
+          {errorMessage}
+        </p>
 
         <input type="submit" className="btn btn-primary" value="Save" />
       </form>

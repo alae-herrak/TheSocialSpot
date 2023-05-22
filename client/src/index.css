@@ -8,6 +8,16 @@
     width: 50%;
   }
 }
+@media (max-width:576px){
+  .settings-form {
+    width: 100%;
+  }
+}
+@media (min-width:992px){
+  .settings-form {
+    width: 50%;
+  }
+}
 .full-height {
   height: 100vh;
 }
