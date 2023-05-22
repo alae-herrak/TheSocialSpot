@@ -1,5 +1,11 @@
 import { useState } from "react";
 import { ProfileInformationProps } from "../../types";
+import {
+  getUserByEmail,
+  updateEmail,
+  updateFullName,
+  updateProfilePicture,
+} from "../../api/user";
 
 const ProfileInformation = ({ user, theme }: ProfileInformationProps) => {
   const noProfilePicture = import.meta.env.VITE_NO_PROFILE_PICTURE;
@@ -28,8 +34,29 @@ const ProfileInformation = ({ user, theme }: ProfileInformationProps) => {
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (fullName===user!.fullName && email === user!.email && profilePicture===user!.profilePicture) {
-      setErrorMessage("No changes")
+    if (fullName.trim() === "" || email.trim() === "")
+      setErrorMessage("Invalid information");
+    else {
+      if (
+        fullName === user!.fullName &&
+        email === user!.email &&
+        profilePicture === user!.profilePicture
+      )
+        setErrorMessage("There has been no change");
+      else {
+        if (fullName !== user!.fullName) {
+          updateFullName(fullName);
+          setFullName(fullName);
+        }
+        if (email !== user!.email) {
+          getUserByEmail(email).then((res) => {
+            if (res.data) setErrorMessage("Email is already taken");
+            else updateEmail(email);
+          });
+        }
+        if (profilePicture !== user!.profilePicture)
+          updateProfilePicture(profilePicture);
+      }
     }
   };
 

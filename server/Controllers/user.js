@@ -88,7 +88,8 @@ export const _updateTheme = async (req, res) => {
 
 export const _updateFullName = async (req, res) => {
   try {
-    const { user_id, fullName } = req.body;
+    const { user_id } = req.user;
+    const { fullName } = req.body;
     const updatedUser = await updateFullName(user_id, fullName);
     res.send(updatedUser);
   } catch (error) {
@@ -98,7 +99,8 @@ export const _updateFullName = async (req, res) => {
 
 export const _updateEmail = async (req, res) => {
   try {
-    const { user_id, email } = req.body;
+    const { user_id } = req.user;
+    const { email } = req.body;
     const updatedUser = await updateEmail(user_id, email);
     res.send(updatedUser);
   } catch (error) {
@@ -119,7 +121,8 @@ export const _updatePassword = async (req, res) => {
 
 export const _updateProfilePicture = async (req, res) => {
   try {
-    const { user_id, profilePicture } = req.body;
+    const { user_id } = req.user; 
+    const { profilePicture } = req.body;
     const updatedUser = await updateProfilePicture(user_id, profilePicture);
     res.send(updatedUser);
   } catch (error) {

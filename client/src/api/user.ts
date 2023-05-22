@@ -35,8 +35,15 @@ export const updateFullName = async (fullName: string) => {
     fullName,
   });
 };
+
+export const updateEmail = async (email: string) => {
+  return await API.patch<User>(`/update/email`, {
+    email,
+  });
+};
+
 export const updateProfilePicture = async (profilePicture: string) => {
-  return await API.patch<User>(`/update/fullname`, {
+  return await API.patch<User>(`/update/profilePicture`, {
     profilePicture,
   });
 };
