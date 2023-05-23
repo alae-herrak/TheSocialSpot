@@ -26,9 +26,7 @@ export const _createUser = async (req, res) => {
       profilePicture,
       theme
     );
-    const token = jwt.sign({ user_id: user.user_id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign({ user_id: user.user_id }, process.env.JWT_SECRET);
     res.send({ user, token });
   } catch (error) {
     res.send(error);
@@ -57,9 +55,7 @@ export const _getUserByEmail = async (req, res) => {
   try {
     const user = await getUserByEmail(req.params.email);
     if (!user) return res.send(false);
-    const token = jwt.sign({ user_id: user.user_id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign({ user_id: user.user_id }, process.env.JWT_SECRET);
     res.send({ user, token });
   } catch (error) {
     res.send(error);
@@ -121,7 +117,7 @@ export const _updatePassword = async (req, res) => {
 
 export const _updateProfilePicture = async (req, res) => {
   try {
-    const { user_id } = req.user; 
+    const { user_id } = req.user;
     const { profilePicture } = req.body;
     const updatedUser = await updateProfilePicture(user_id, profilePicture);
     res.send(updatedUser);
@@ -161,10 +157,7 @@ export const _checkLogin = async (req, res) => {
       else {
         const token = jwt.sign(
           { user_id: user.user_id },
-          process.env.JWT_SECRET,
-          {
-            expiresIn: "1h",
-          }
+          process.env.JWT_SECRET
         );
         res.send({ user, token });
       }
