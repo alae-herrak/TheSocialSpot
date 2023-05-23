@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+
 import { ProfileInformationProps } from "../../types";
 import {
   getUserByEmail,
@@ -6,8 +8,10 @@ import {
   updateFullName,
   updateProfilePicture,
 } from "../../api/user";
+import { update } from "../../redux/userSlice";
 
 const ProfileInformation = ({ user, theme }: ProfileInformationProps) => {
+  const dispatch = useDispatch();
   const noProfilePicture = import.meta.env.VITE_NO_PROFILE_PICTURE;
 
   const [errorMessage, setErrorMessage] = useState<string>(".");
@@ -45,17 +49,24 @@ const ProfileInformation = ({ user, theme }: ProfileInformationProps) => {
         setErrorMessage("There has been no change");
       else {
         if (fullName !== user!.fullName) {
-          updateFullName(fullName);
+          updateFullName(fullName).then((res) =>
+            dispatch(update(JSON.stringify(res.data)))
+          );
           setFullName(fullName);
         }
         if (email !== user!.email) {
           getUserByEmail(email).then((res) => {
             if (res.data) setErrorMessage("Email is already taken");
-            else updateEmail(email);
+            else
+              updateEmail(email).then((res) =>
+                dispatch(update(JSON.stringify(res.data)))
+              );
           });
         }
         if (profilePicture !== user!.profilePicture)
-          updateProfilePicture(profilePicture);
+          updateProfilePicture(profilePicture).then((res) =>
+            dispatch(update(JSON.stringify(res.data)))
+          );
       }
     }
   };
