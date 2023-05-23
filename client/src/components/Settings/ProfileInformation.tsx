@@ -14,6 +14,7 @@ const ProfileInformation = ({ user, theme }: ProfileInformationProps) => {
   const dispatch = useDispatch();
   const noProfilePicture = import.meta.env.VITE_NO_PROFILE_PICTURE;
 
+  const [showAlert, setShowAlert] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>(".");
   const [fullName, setFullName] = useState<string>(user!.fullName!);
   const [email, setEmail] = useState<string>(user!.email!);
@@ -49,26 +50,36 @@ const ProfileInformation = ({ user, theme }: ProfileInformationProps) => {
         setErrorMessage("There has been no change");
       else {
         if (fullName !== user!.fullName) {
-          updateFullName(fullName).then((res) =>
-            dispatch(update(JSON.stringify(res.data)))
-          );
+          updateFullName(fullName).then((res) => {
+            dispatch(update(JSON.stringify(res.data)));
+            showAlertTimout();
+          });
           setFullName(fullName);
         }
         if (email !== user!.email) {
           getUserByEmail(email).then((res) => {
             if (res.data) setErrorMessage("Email is already taken");
             else
-              updateEmail(email).then((res) =>
-                dispatch(update(JSON.stringify(res.data)))
-              );
+              updateEmail(email).then((res) => {
+                dispatch(update(JSON.stringify(res.data)));
+                showAlertTimout();
+              });
           });
         }
         if (profilePicture !== user!.profilePicture)
-          updateProfilePicture(profilePicture).then((res) =>
-            dispatch(update(JSON.stringify(res.data)))
-          );
+          updateProfilePicture(profilePicture).then((res) => {
+            dispatch(update(JSON.stringify(res.data)));
+            showAlertTimout();
+          });
       }
     }
+  };
+
+  const showAlertTimout = () => {
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 3000);
   };
 
   return (
@@ -77,6 +88,20 @@ const ProfileInformation = ({ user, theme }: ProfileInformationProps) => {
         theme === "dark" ? "dark" : "white"
       } p-4 p-md-5 rounded-3 shadow-sm mb-3`}
     >
+      {showAlert && (
+        <div
+          className="alert alert-success alert-dismissible fade show"
+          role="alert"
+        >
+          Changes have been saved
+          <button
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+      )}
       <h5>Profile information</h5>
       <p className="mb-4">
         Update your account's profile information and email address.
