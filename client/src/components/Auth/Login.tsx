@@ -6,13 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Layout from "./Layout";
 import { getGoogleUserInfo } from "../../api/googleOAuth";
 import { GoogleUser, RootState, User } from "../../types";
-import {
-  checkLogin,
-  createUser,
-  getUserByEmail,
-  updateFullName,
-  updateProfilePicture,
-} from "../../api/user";
+import { checkLogin, createUser, getUserByEmail } from "../../api/user";
 import { login } from "../../redux/userSlice";
 import GoogleLogo from "../../assets/images/google.png";
 import { dark, light } from "../../redux/themeSlice";
