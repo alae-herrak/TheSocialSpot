@@ -43,20 +43,20 @@ const ProfileInformation = ({ user, theme }: ProfileInformationProps) => {
       setErrorMessage("Invalid information");
     else {
       if (
-        fullName === user!.fullName &&
-        email === user!.email &&
-        profilePicture === user!.profilePicture
+        fullName === user.fullName &&
+        email === user.email &&
+        profilePicture === user.profilePicture
       )
         setErrorMessage("There has been no change");
       else {
-        if (fullName !== user!.fullName) {
+        if (fullName !== user.fullName) {
           updateFullName(fullName).then((res) => {
             dispatch(update(JSON.stringify(res.data)));
             showAlertTimout();
           });
           setFullName(fullName);
         }
-        if (email !== user!.email) {
+        if (email !== user.email) {
           getUserByEmail(email).then((res) => {
             if (res.data) setErrorMessage("Email is already taken");
             else
@@ -66,7 +66,7 @@ const ProfileInformation = ({ user, theme }: ProfileInformationProps) => {
               });
           });
         }
-        if (profilePicture !== user!.profilePicture)
+        if (profilePicture !== user.profilePicture)
           updateProfilePicture(profilePicture).then((res) => {
             dispatch(update(JSON.stringify(res.data)));
             showAlertTimout();

@@ -53,3 +53,22 @@ export const updateTheme = async (theme: string) => {
     theme,
   });
 };
+
+export const updatePassword = async (password: string) => {
+  return await API.patch("/update/password", {
+    password,
+  });
+};
+
+export const isPasswordEmpty = async (password: string) => {
+  return await API.get<boolean>(`/isPasswordEmpty?password=${password}`);
+};
+
+export const isPasswordCorrect = async (
+  password: string,
+  hashedPassword: string
+) => {
+  return await API.get<boolean>(
+    `/isPasswordCorrect?password=${password}&hashedPassword=${hashedPassword}`
+  );
+};

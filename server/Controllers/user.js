@@ -106,7 +106,8 @@ export const _updateEmail = async (req, res) => {
 
 export const _updatePassword = async (req, res) => {
   try {
-    const { user_id, password } = req.body;
+    const { user_id } = req.user;
+    const { password } = req.body;
     const hashedPassword = bcrypt.hashSync(password, 13);
     const updatedUser = await updatePassword(user_id, hashedPassword);
     res.send(updatedUser);
@@ -162,6 +163,26 @@ export const _checkLogin = async (req, res) => {
         res.send({ user, token });
       }
     }
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const _isPasswordEmpty = async (req, res) => {
+  try {
+    const { password } = req.query;
+    const isEmpty = bcrypt.compareSync("", password);
+    res.send(isEmpty);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const _isPasswordCorrect = async (req, res) => {
+  try {
+    const { password, hashedPassword } = req.query;
+    const isCorrect = bcrypt.compareSync(password, hashedPassword);
+    res.send(isCorrect);
   } catch (error) {
     res.send(error);
   }

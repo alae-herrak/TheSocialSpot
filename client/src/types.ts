@@ -33,10 +33,15 @@ export type UserWithToken = {
 };
 
 export type ProfileInformationProps = {
-  user: User | null,
-  theme: string
-}
+  user: User;
+  theme: string;
+};
+
+export type SettingsPasswordProps = {
+  user: User;
+  theme: string;
+};
 
 export type SettingsThemeProps = {
-  theme: string
-}
+  theme: string;
+};
