@@ -18,6 +18,7 @@ const Password = ({ user, theme }: SettingsPasswordProps) => {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>(".");
   const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     isPasswordEmpty(user?.password!).then((res) => setFirstPassword(res.data));
@@ -32,7 +33,9 @@ const Password = ({ user, theme }: SettingsPasswordProps) => {
         if (newPassword !== confirmPassword)
           setErrorMessage("Passwords don't match");
         else {
+          setLoading(true);
           updatePassword(newPassword).then((res) => {
+            setLoading(false);
             dispatch(update(JSON.stringify(res.data)));
             showAlertTimout();
             setFirstPassword(false);
@@ -54,10 +57,14 @@ const Password = ({ user, theme }: SettingsPasswordProps) => {
           setErrorMessage("Passwords don't match");
         else {
           const localUser: User = JSON.parse(localStorage.getItem("user")!);
+          setLoading(true);
           isPasswordCorrect(currentPassword, localUser.password).then((res) => {
-            if (!res.data) setErrorMessage("Current password is incorrect");
-            else {
+            if (!res.data) {
+              setErrorMessage("Current password is incorrect");
+              setLoading(false);
+            } else {
               updatePassword(newPassword).then((res) => {
+                setLoading(false);
                 dispatch(update(JSON.stringify(res.data)));
                 showAlertTimout();
                 setCurrentPassword("");
@@ -145,8 +152,13 @@ const Password = ({ user, theme }: SettingsPasswordProps) => {
         >
           {errorMessage}
         </p>
-
-        <input type="submit" className="btn btn-primary" value="Save" />
+        <button type="submit" className="btn btn-primary settings-btn">
+          {loading ? (
+            <div className="spinner-border spinner-border-sm"></div>
+          ) : (
+            "Save"
+          )}
+        </button>
       </form>
     </div>
   );

@@ -21,6 +21,7 @@ const ProfileInformation = ({ user, theme }: ProfileInformationProps) => {
   const [profilePicture, setProfilePicture] = useState<string>(
     user?.profilePicture!
   );
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -49,12 +50,14 @@ const ProfileInformation = ({ user, theme }: ProfileInformationProps) => {
       )
         setErrorMessage("There has been no change");
       else {
+        setLoading(true);
         if (fullName !== user.fullName) {
           updateFullName(fullName).then((res) => {
             dispatch(update(JSON.stringify(res.data)));
             showAlertTimout();
+            setFullName(fullName);
           });
-          setFullName(fullName);
+          setLoading(false);
         }
         if (email !== user.email) {
           getUserByEmail(email).then((res) => {
@@ -64,6 +67,7 @@ const ProfileInformation = ({ user, theme }: ProfileInformationProps) => {
                 dispatch(update(JSON.stringify(res.data)));
                 showAlertTimout();
               });
+            setLoading(false);
           });
         }
         if (profilePicture !== user.profilePicture)
@@ -71,6 +75,7 @@ const ProfileInformation = ({ user, theme }: ProfileInformationProps) => {
             dispatch(update(JSON.stringify(res.data)));
             showAlertTimout();
           });
+        setLoading(false);
       }
     }
   };
@@ -170,7 +175,13 @@ const ProfileInformation = ({ user, theme }: ProfileInformationProps) => {
           {errorMessage}
         </p>
 
-        <input type="submit" className="btn btn-primary" value="Save" />
+        <button type="submit" className="btn btn-primary settings-btn">
+          {loading ? (
+            <div className="spinner-border spinner-border-sm"></div>
+          ) : (
+            "Save"
+          )}
+        </button>
       </form>
     </div>
   );
