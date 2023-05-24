@@ -3,7 +3,7 @@ import {
   _blockUser,
   _checkLogin,
   _createUser,
-  _deleteUser,
+  _deleteAccount,
   _getAllUsers,
   _getUserByEmail,
   _getUserById,
@@ -41,6 +41,6 @@ router.patch("/block", _blockUser);
 router.patch("/unblock", _unblockUser);
 
 // DELETE Requests
-router.delete("/delete/user_id/:user_id", _deleteUser);
+router.delete("/delete", auth, _deleteAccount);
 
 export default router;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { SettingsPasswordProps, User } from "../../types";
+import { SettingsProps, User } from "../../types";
 import {
   isPasswordCorrect,
   isPasswordEmpty,
@@ -9,7 +9,7 @@ import {
 } from "../../api/user";
 import { update } from "../../redux/userSlice";
 
-const Password = ({ user, theme }: SettingsPasswordProps) => {
+const Password = ({ user, theme }: SettingsProps) => {
   const dispatch = useDispatch();
 
   const [firstPassword, setFirstPassword] = useState<boolean>(false);

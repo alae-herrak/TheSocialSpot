@@ -72,3 +72,7 @@ export const isPasswordCorrect = async (
     `/isPasswordCorrect?password=${password}&hashedPassword=${hashedPassword}`
   );
 };
+
+export const deleteAccount = async () => {
+  return await API.delete("/delete");
+};

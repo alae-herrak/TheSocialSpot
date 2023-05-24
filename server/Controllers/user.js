@@ -62,9 +62,10 @@ export const _getUserByEmail = async (req, res) => {
   }
 };
 
-export const _deleteUser = async (req, res) => {
+export const _deleteAccount = async (req, res) => {
   try {
-    const result = await deleteUser(req.params.user_id);
+    const { user_id } = req.user;
+    const result = await deleteUser(user_id);
     res.send(result);
   } catch (error) {
     res.send(error);

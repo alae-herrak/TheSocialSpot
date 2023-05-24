@@ -32,16 +32,7 @@ export type UserWithToken = {
   token: string;
 };
 
-export type ProfileInformationProps = {
+export type SettingsProps = {
   user: User;
-  theme: string;
-};
-
-export type SettingsPasswordProps = {
-  user: User;
-  theme: string;
-};
-
-export type SettingsThemeProps = {
   theme: string;
 };

@@ -18,7 +18,7 @@ const Settings: React.FC = () => {
       <div className="container p-0 my-3">
         <ProfileInformation user={user} theme={theme} />
         <Password user={user} theme={theme}/>
-        <DeleteAccount theme={theme}/>
+        <DeleteAccount user={user} theme={theme}/>
       </div>
     </>
   );
