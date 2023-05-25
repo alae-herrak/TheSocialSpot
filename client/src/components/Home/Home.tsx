@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
-import Navbar from "../Navbar";
 import { RootState } from "../../types";
 
 
@@ -12,7 +11,7 @@ const Home: React.FC = () => {
   return (
     <>
       {!user?.user_id && <Navigate to="/login" />}
-      <Navbar />
+      Home
     </>
   );
 };

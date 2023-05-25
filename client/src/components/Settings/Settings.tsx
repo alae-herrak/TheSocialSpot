@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
-import Navbar from "../Navbar";
 import { RootState } from "../../types";
 import ProfileInformation from "./ProfileInformation";
 import Password from "./Password";
@@ -14,7 +13,6 @@ const Settings: React.FC = () => {
   return (
     <>
       {!user.user_id && <Navigate to="/login" />}
-      <Navbar />
       <div className="container p-0 my-3">
         <ProfileInformation user={user} theme={theme} />
         <Password user={user} theme={theme}/>
