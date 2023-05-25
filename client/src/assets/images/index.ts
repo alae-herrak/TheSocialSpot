@@ -9,3 +9,4 @@ export { default as SettingsDark } from "./settings-dark.png";
 export { default as SettingsLight } from "./settings-light.png";
 export { default as LogoutDark } from "./logout-dark.png";
 export { default as LogoutLight } from "./logout-light.png";
+export { default as UploadImage } from "./upload.png";

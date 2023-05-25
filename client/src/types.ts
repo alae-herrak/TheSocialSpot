@@ -36,3 +36,20 @@ export type UserThemeProps = {
   user: User;
   theme: string;
 };
+
+export type Post = {
+  post_id: number;
+  user_id: number;
+  textContent: string;
+  photo: string;
+  date: Date;
+  edited: boolean;
+};
+
+export type PostToCreate = {
+  user_id: number;
+  textContent: string;
+  photo: string;
+  date: Date;
+  edited: boolean;
+};
