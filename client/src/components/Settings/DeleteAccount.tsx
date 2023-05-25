@@ -1,10 +1,10 @@
 import { useDispatch } from "react-redux";
 
 import { deleteAccount } from "../../api/user";
-import { SettingsProps } from "../../types";
+import { UserThemeProps } from "../../types";
 import { logout } from "../../redux/userSlice";
 
-const DeleteAccount = ({ user, theme }: SettingsProps) => {
+const DeleteAccount = ({ user, theme }: UserThemeProps) => {
   const dispatch = useDispatch();
 
   const handleDeleteAccount = () => {

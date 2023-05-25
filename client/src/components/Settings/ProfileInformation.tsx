@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { SettingsProps } from "../../types";
+import { UserThemeProps } from "../../types";
 import {
   getUserByEmail,
   updateEmail,
@@ -10,7 +10,7 @@ import {
 } from "../../api/user";
 import { update } from "../../redux/userSlice";
 
-const ProfileInformation = ({ user, theme }: SettingsProps) => {
+const ProfileInformation = ({ user, theme }: UserThemeProps) => {
   const dispatch = useDispatch();
   const noProfilePicture = import.meta.env.VITE_NO_PROFILE_PICTURE;
 

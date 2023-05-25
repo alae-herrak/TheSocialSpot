@@ -32,7 +32,7 @@ export type UserWithToken = {
   token: string;
 };
 
-export type SettingsProps = {
+export type UserThemeProps = {
   user: User;
   theme: string;
 };
