@@ -16,9 +16,7 @@ export const createUser = async (
 };
 
 export const getAllUsers = async () => {
-  const [result] = await pool.query(
-    `SELECT * FROM users WHERE role = 'user'`
-  );
+  const [result] = await pool.query(`SELECT * FROM users WHERE role = 'user'`);
   return result;
 };
 
@@ -99,4 +97,12 @@ export const unblockUser = async (user_id) => {
     [user_id]
   );
   return getUserById(user_id);
+};
+
+export const userSearch = async (searchTerm) => {
+  const [result] = await pool.query(
+    `SELECT * FROM users WHERE fullName like ? OR email like ?`,
+    [`%${searchTerm}%`, `%${searchTerm}%`]
+  );
+  return result;
 };

@@ -5,7 +5,7 @@ import { getPostsOfUserId } from "../../api/post";
 import POST from "../Home/Post";
 import { Navigate } from "react-router-dom";
 
-const Profile = ({ user, theme }: UserThemeProps) => {
+const Profile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 

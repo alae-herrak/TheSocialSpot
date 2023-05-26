@@ -17,17 +17,30 @@ import {
   LogoutLight,
 } from "../assets/images";
 import { updateTheme } from "../api/user";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const user = useSelector((state: RootState) => state.user.user);
   const theme = useSelector((state: RootState) => state.theme.theme);
+
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const handleUpdateTheme = () => {
     updateTheme(theme === "dark" ? "light" : "dark")
       .then((res) => localStorage.setItem("user", JSON.stringify(res.data)))
       .catch((err) => console.log(err));
+  };
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (searchTerm !== "") {
+      navigate(`/search/${searchTerm.trim()}`);
+      setSearchTerm(searchTerm.trim());
+    }
   };
 
   return (
@@ -37,7 +50,7 @@ const Navbar: React.FC = () => {
       }`}
     >
       <div className="container">
-        <Link to='/' className="navbar-brand d-flex align-items-center">
+        <Link to="/" className="navbar-brand d-flex align-items-center">
           <img src={NavLogo} alt="" className="width-2rem me-2" />
           <span className="d-none d-md-block">
             the<span className="fw-bold">SocialSpot</span>
@@ -47,17 +60,27 @@ const Navbar: React.FC = () => {
           <ul className="navbar-nav d-flex flex-row align-items-center">
             <li className="nav-item me-4">
               <form
-                action=""
+                onSubmit={handleFormSubmit}
                 className="m-0 p-0 d-flex align-items-center w-100"
               >
-                <input
-                  type="text"
-                  className="form-control form-control-sm"
-                  placeholder="Search users ..."
-                />
-                {/* <button className="bg-transparent border-0" type="button">
-                          <img src={SearchIcon} alt="" className="width-1-5rem"/>
-                      </button> */}
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control form-control-sm border-0 shadow-none bg-white text-black"
+                    placeholder="Search users ..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    className={`input-group-text bg-white border-0 text-${
+                      searchTerm === "" ? "white" : "black"
+                    }`}
+                    onClick={() => setSearchTerm("")}
+                  >
+                    x
+                  </button>
+                </div>
               </form>
             </li>
             <li className="nav-item dropdown me-4">
@@ -113,7 +136,11 @@ const Navbar: React.FC = () => {
             <li className="nav-item dropdown">
               <img
                 src={user?.profilePicture}
-                style={{aspectRatio:"1/1",objectFit:"contain",backgroundColor:theme==="light"?"white":"black"}}
+                style={{
+                  aspectRatio: "1/1",
+                  objectFit: "contain",
+                  backgroundColor: theme === "light" ? "white" : "black",
+                }}
                 className="width-2rem p-0 rounded-circle"
                 role="button"
                 data-bs-toggle="modal"
@@ -137,7 +164,10 @@ const Navbar: React.FC = () => {
                       ></button>
                     </div>
                     <div className="modal-body">
-                      <a href="/profile" className="text-decoration-none text-body nav-link d-flex align-items-center">
+                      <a
+                        href="/profile"
+                        className="text-decoration-none text-body nav-link d-flex align-items-center"
+                      >
                         <img
                           src={theme === "light" ? ProfileDark : ProfileLight}
                           className="width-1-5rem me-2"
@@ -157,7 +187,10 @@ const Navbar: React.FC = () => {
                         />
                         Theme
                       </button>
-                      <a href='/settings' className="text-decoration-none text-body nav-link d-flex align-items-center">
+                      <a
+                        href="/settings"
+                        className="text-decoration-none text-body nav-link d-flex align-items-center"
+                      >
                         <img
                           src={theme === "light" ? SettingsDark : SettingsLight}
                           className="width-1-5rem me-2"

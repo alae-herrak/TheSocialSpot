@@ -15,6 +15,7 @@ import {
   _updatePassword,
   _updateProfilePicture,
   _updateTheme,
+  _userSearch,
 } from "../Controllers/user.js";
 import auth from "../middleware/auth.js";
 
@@ -30,6 +31,7 @@ router.get("/email/:email", _getUserByEmail);
 router.get("/checkLogin", _checkLogin);
 router.get("/isPasswordEmpty", auth, _isPasswordEmpty);
 router.get("/isPasswordCorrect", auth, _isPasswordCorrect);
+router.get("/search", auth, _userSearch);
 
 // PATCH Requests
 router.patch("/update/theme", auth, _updateTheme);

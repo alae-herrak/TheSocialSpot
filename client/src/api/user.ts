@@ -80,3 +80,7 @@ export const isPasswordCorrect = async (
 export const deleteAccount = async () => {
   return await API.delete("/delete");
 };
+
+export const userSearch = async (searchTerm: string) => {
+  return await API.get<User[]>(`/search?searchTerm=${searchTerm}`);
+};

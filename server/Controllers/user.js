@@ -14,6 +14,7 @@ import {
   updateFullName,
   getUserByEmail,
 } from "../Database/user.js";
+import { userSearch } from "../Database/user.js";
 
 export const _createUser = async (req, res) => {
   try {
@@ -184,6 +185,16 @@ export const _isPasswordCorrect = async (req, res) => {
     const { password, hashedPassword } = req.query;
     const isCorrect = bcrypt.compareSync(password, hashedPassword);
     res.send(isCorrect);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const _userSearch = async (req, res) => {
+  try {
+    const { searchTerm } = req.query;
+    const result = await userSearch(searchTerm);
+    res.send(result);
   } catch (error) {
     res.send(error);
   }
