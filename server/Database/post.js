@@ -20,3 +20,10 @@ export const getPostById = async (post_id) => {
   ]);
   return result[0];
 };
+
+export const getPostsOfUserId = async (user_id) => {
+  const [result] = await pool.query(`SELECT * FROM posts WHERE user_id = ?`, [
+    user_id,
+  ]);
+  return result;
+};

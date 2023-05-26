@@ -113,6 +113,7 @@ const Navbar: React.FC = () => {
             <li className="nav-item dropdown">
               <img
                 src={user?.profilePicture}
+                style={{aspectRatio:"1/1",objectFit:"contain",backgroundColor:theme==="light"?"white":"black"}}
                 className="width-2rem p-0 rounded-circle"
                 role="button"
                 data-bs-toggle="modal"
@@ -136,13 +137,13 @@ const Navbar: React.FC = () => {
                       ></button>
                     </div>
                     <div className="modal-body">
-                      <button className="text-decoration-none text-body nav-link d-flex align-items-center">
+                      <a href="/profile" className="text-decoration-none text-body nav-link d-flex align-items-center">
                         <img
                           src={theme === "light" ? ProfileDark : ProfileLight}
                           className="width-1-5rem me-2"
                         />
                         Profile
-                      </button>
+                      </a>
                       <button
                         className="text-decoration-none text-body nav-link d-flex align-items-center"
                         onClick={() => {

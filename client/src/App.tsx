@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux/es/exports";
 
 import { RootState } from "./types";
-import { Navbar, Home, Login, Register, Settings } from "./components";
+import { Navbar, Home, Login, Register, Settings, Profile } from "./components";
 
 function App() {
   const user = useSelector((state: RootState) => state.user.user);
@@ -22,6 +22,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<Home />} />
+        <Route
+          path="/profile"
+          element={<Profile user={user!} theme={theme} />}
+        />
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

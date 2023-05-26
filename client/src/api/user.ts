@@ -24,6 +24,10 @@ export const getUserByEmail = async (email: string) => {
   return await API.get<UserWithToken>(`/email/${email}`);
 };
 
+export const getUserById = async (user_id: number) => {
+  return await API.get<User>(`/user_id/${user_id}`);
+};
+
 export const checkLogin = async (email: string, password: string) => {
   return await API.get<UserWithToken>(
     `/checkLogin/?email=${email}&password=${password}`

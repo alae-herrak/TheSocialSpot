@@ -25,7 +25,7 @@ router.post("/", _createUser);
 
 // GET Requests
 router.get("/", _getAllUsers);
-router.get("/user_id/:user_id", _getUserById);
+router.get("/user_id/:user_id", auth, _getUserById);
 router.get("/email/:email", _getUserByEmail);
 router.get("/checkLogin", _checkLogin);
 router.get("/isPasswordEmpty", auth, _isPasswordEmpty);

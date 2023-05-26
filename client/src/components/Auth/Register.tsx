@@ -206,7 +206,7 @@ const Register: React.FC = () => {
           <img
             src={profilePicture}
             alt=""
-            style={{ width: "64px", height: "64px" }}
+            style={{ width: "64px", height: "64px",aspectRatio:"1/1",objectFit:"contain",backgroundColor:theme==="light"?"white":"black" }}
             className="img-fluid rounded-circle me-2"
           />
 

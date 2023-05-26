@@ -13,5 +13,9 @@ API.interceptors.request.use((req) => {
 });
 
 export const createPost = async (post: PostToCreate) => {
-    return await API.post<Post>("/",post)
-}
+  return await API.post<Post>("/", post);
+};
+
+export const getPostsOfUserId = async (user_id: number) => {
+  return await API.get<Post[]>(`/user_id/${user_id}`);
+};

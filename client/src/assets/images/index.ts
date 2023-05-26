@@ -10,3 +10,7 @@ export { default as SettingsLight } from "./settings-light.png";
 export { default as LogoutDark } from "./logout-dark.png";
 export { default as LogoutLight } from "./logout-light.png";
 export { default as UploadImage } from "./upload.png";
+export { default as HeartDark } from "./heart-dark.png";
+export { default as HeartLight } from "./heart-light.png";
+export { default as CommentDark } from "./comment-dark.png";
+export { default as CommentLight } from "./comment-light.png";

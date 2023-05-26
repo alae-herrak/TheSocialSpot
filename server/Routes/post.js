@@ -3,6 +3,7 @@ import {
   _createPost,
   _getAllPosts,
   _getPostById,
+  _getPostsOfUserId,
 } from "../Controllers/post.js";
 import auth from "../middleware/auth.js";
 
@@ -14,5 +15,6 @@ router.post("/", auth, _createPost);
 // GET Requests
 router.get("/", _getAllPosts);
 router.get("/post_id/:post_id", _getPostById);
+router.get("/user_id/:user_id", auth, _getPostsOfUserId);
 
 export default router;

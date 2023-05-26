@@ -53,3 +53,13 @@ export type PostToCreate = {
   date: Date;
   edited: boolean;
 };
+
+export type PostProps = {
+  theme: string;
+  key: number;
+  profilePicture: string;
+  fullName: string;
+  date: Date;
+  textContent: string;
+  photo: string;
+}
