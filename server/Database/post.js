@@ -5,7 +5,7 @@ export const createPost = async (user_id, textContent, photo, date, edited) => {
     `INSERT INTO posts (user_id,textContent,photo,date, edited) VALUES (?, ?, ?, ?, ?)`,
     [user_id, textContent, photo, date, edited]
   );
-  const post_id = result.insertedId;
+  const post_id = result.insertId;
   return getPostById(post_id);
 };
 
