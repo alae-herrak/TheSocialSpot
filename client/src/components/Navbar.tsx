@@ -136,6 +136,7 @@ const Navbar: React.FC = () => {
             <li className="nav-item dropdown">
               <img
                 src={user?.profilePicture}
+                referrerPolicy="no-referrer"
                 style={{
                   aspectRatio: "1/1",
                   objectFit: "contain",

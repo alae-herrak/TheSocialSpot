@@ -29,6 +29,7 @@ const Profile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
         >
           <img
             src={user.profilePicture}
+            referrerPolicy="no-referrer"
             alt=""
             style={{
               aspectRatio: "1/1",

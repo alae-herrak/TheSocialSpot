@@ -140,6 +140,7 @@ const ProfileInformation = ({ user, theme }: UserThemeProps) => {
         <div>
           <img
             src={profilePicture}
+            referrerPolicy="no-referrer"
             alt=""
             width="64px"
             className="img-fluid rounded-circle me-3"

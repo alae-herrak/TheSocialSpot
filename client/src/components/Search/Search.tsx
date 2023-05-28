@@ -44,6 +44,7 @@ const Search: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
             <div className="d-flex justify-content-start align-items-center gap-2">
               <img
                 src={user.profilePicture}
+                referrerPolicy="no-referrer"
                 style={{
                   aspectRatio: "1/1",
                   objectFit: "contain",
