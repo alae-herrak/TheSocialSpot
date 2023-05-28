@@ -62,4 +62,16 @@ export type PostProps = {
   date: Date;
   textContent: string;
   photo: string;
+};
+
+export type Relation = {
+  relation_id: number | undefined;
+  user_id1: number;
+  user_id2: number;
+  state: string;
+};
+
+export type ActionButtonProps = {
+  user_id1: number;
+  user_id2: number;
 }

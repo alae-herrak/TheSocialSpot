@@ -67,7 +67,7 @@ export const _updateRelation = async (req, res) => {
 
 export const _deleteRelation = async (req, res) => {
   try {
-    const { relation_id } = req.body;
+    const relation_id = req.params.relation_id;
     const relation = await deleteRelation(relation_id);
     res.send(relation);
   } catch (error) {

@@ -2,10 +2,10 @@ import pool from "./database.js";
 
 export const createRelation = async (user_id1, user_id2, state) => {
   const [result] = await pool.query(
-    `INSERT INTO relations (user_id1, user_id2, state) values (?, ?, ?)`,
+    `INSERT INTO relations (user_id1, user_id2, state) VALUES (?, ?, ?)`,
     [user_id1, user_id2, state]
   );
-  const relation_id = result.insertedId;
+  const relation_id = result.insertId;
   return getRelationById(relation_id);
 };
 

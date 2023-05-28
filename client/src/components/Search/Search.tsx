@@ -1,7 +1,9 @@
 import { Navigate, useParams } from "react-router-dom";
-import { User, UserThemeProps } from "../../types";
 import { useEffect, useState } from "react";
+
+import { User, UserThemeProps } from "../../types";
 import { userSearch } from "../../api/user";
+import ActionButton from "./ActionButton";
 
 const Search: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
   const { searchTerm } = useParams<string>();
@@ -36,31 +38,37 @@ const Search: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
             </div>
           )
         )}
-        {result.map((user) => (
-          <div
-            className="d-flex justify-content-between align-items-center px-0 px-md-5 my-3 my-md-5"
-            key={user.user_id}
-          >
-            <div className="d-flex justify-content-start align-items-center gap-2">
-              <img
-                src={user.profilePicture}
-                referrerPolicy="no-referrer"
-                style={{
-                  aspectRatio: "1/1",
-                  objectFit: "contain",
-                  backgroundColor: theme === "light" ? "white" : "black",
-                }}
-                alt=""
-                className="img-fluid width-4rem rounded-circle me-2 border border-1 border-dark-subtle"
-              />
-              <div className="d-flex flex-column justify-content-start">
-                <p className="lead fw-semibold m-0">{user.fullName}</p>
-                <p className="m-0">{user.email}</p>
+        {result.map(
+          (res) =>
+            res.user_id !== user.user_id && (
+              <div
+                className="d-flex justify-content-between align-items-center px-0 px-md-5 my-3 my-md-5"
+                key={res.user_id}
+              >
+                <div className="d-flex justify-content-start align-items-center gap-2">
+                  <img
+                    src={res.profilePicture}
+                    referrerPolicy="no-referrer"
+                    style={{
+                      aspectRatio: "1/1",
+                      objectFit: "contain",
+                      backgroundColor: theme === "light" ? "white" : "black",
+                    }}
+                    alt=""
+                    className="img-fluid width-4rem rounded-circle me-2 border border-1 border-dark-subtle"
+                  />
+                  <div className="d-flex flex-column justify-content-start">
+                    <p className="lead fw-semibold m-0">{res.fullName}</p>
+                    <p className="m-0">{res.email}</p>
+                  </div>
+                </div>
+                <ActionButton
+                  user_id1={user.user_id!}
+                  user_id2={res.user_id!}
+                />
               </div>
-            </div>
-            <button className="btn btn-primary btn-sm">View profile</button>
-          </div>
-        ))}
+            )
+        )}
       </div>
     </div>
   );
