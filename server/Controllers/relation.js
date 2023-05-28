@@ -3,6 +3,8 @@ import {
   deleteRelation,
   getAllRelations,
   getRelationById,
+  getRelationOfTwoUserIds,
+  getRelationsOfUserId,
   updateRelation,
 } from "../Database/relation.js";
 
@@ -29,6 +31,25 @@ export const _getRelationById = async (req, res) => {
   try {
     const relation = await getRelationById(req.params.relation_id);
     res.send(relation);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const _getRelationsOfUserId = async (req, res) => {
+  try {
+    const relations = await getRelationsOfUserId(req.params.user_id);
+    res.send(relations);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const _getRelationOfTwoUserIds = async (req, res) => {
+  try {
+    const { user_id1, user_id2 } = req.query;
+    const relation = await getRelationOfTwoUserIds(user_id1, user_id2);
+    res.send(relation ? relation : false);
   } catch (error) {
     res.send(error);
   }

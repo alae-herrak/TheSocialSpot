@@ -22,6 +22,22 @@ export const getRelationById = async (relation_id) => {
   return result[0];
 };
 
+export const getRelationsOfUserId = async (user_id) => {
+  const [result] = await pool.query(
+    `SELECT * FROM relations WHERE user_id1 = ? OR user_id2 = ?`,
+    [user_id, user_id]
+  );
+  return result;
+};
+
+export const getRelationOfTwoUserIds = async (user_id1, user_id2) => {
+  const [result] = await pool.query(
+    `SELECT * FROM relations WHERE user_id1 = ? AND user_id2 = ? OR user_id1 = ? AND user_id2 = ?`,
+    [user_id1, user_id2, user_id2, user_id1]
+  );
+  return result[0];
+};
+
 export const updateRelation = async (relation_id, state) => {
   const [result] = await pool.query(
     `UPDATE relations SET state = ? WHERE relation_id = ?`,
