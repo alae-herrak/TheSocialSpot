@@ -10,6 +10,7 @@ import {
   Settings,
   Profile,
   Search,
+  User,
 } from "./components";
 
 function App() {
@@ -37,6 +38,10 @@ function App() {
         <Route
           path="/search/:searchTerm"
           element={<Search user={user!} theme={theme} />}
+        />
+        <Route
+          path="/user/:user_id"
+          element={<User user={user!} theme={theme} />}
         />
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<Navigate to="/" />} />

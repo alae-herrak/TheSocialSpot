@@ -21,7 +21,11 @@ const ActionButton: React.FC<ActionButtonProps> = ({ user_id1, user_id2 }) => {
       if (!res.data) setAction("Add friend");
       else {
         setRelationId(res.data.relation_id);
-        if (res.data.state === "friends") setAction("View profile");
+        if (res.data.state === "friends") {
+          if (window.location.pathname.substring(0, 5) === "/user")
+            setAction("Remove friend");
+          else setAction("View profile");
+        }
         if (res.data.state === "blocked") setAction("Blocked");
         if (res.data.state === "invite") {
           setAction(
@@ -38,7 +42,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({ user_id1, user_id2 }) => {
 
   const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (action === "View profile") {
-      navigate(`/users/${user_id2}`);
+      navigate(`/user/${user_id2}`);
     }
     if (action === "Add friend") {
       setLoading(true);
@@ -77,6 +81,21 @@ const ActionButton: React.FC<ActionButtonProps> = ({ user_id1, user_id2 }) => {
         });
     }
     if (action === "Cancel request") {
+      setLoading(true);
+      deleteRelation(relationId!)
+        .then((res) => {
+          if (res.data) {
+            setAction("Add friend");
+            setLoading(false);
+          }
+        })
+        .catch((err) => {
+          setLoading(false);
+          console.log(err);
+          alert("There has been an error");
+        });
+    }
+    if (action === "Remove friend") {
       setLoading(true);
       deleteRelation(relationId!)
         .then((res) => {
