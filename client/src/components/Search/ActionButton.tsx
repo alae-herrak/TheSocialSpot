@@ -13,7 +13,6 @@ import { Info } from "../../assets/images";
 const ActionButton: React.FC<ActionButtonProps> = ({
   user_id1,
   user_id2,
-  setIsFriend,
 }) => {
   const navigate = useNavigate();
 
@@ -29,7 +28,6 @@ const ActionButton: React.FC<ActionButtonProps> = ({
       else {
         setRelationId(res.data.relation_id);
         if (res.data.state === "friends") {
-          setIsFriend!(true);
           if (location === "/user") setAction("Remove friend");
           else setAction("View profile");
         }

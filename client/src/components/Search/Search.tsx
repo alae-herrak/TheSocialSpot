@@ -68,7 +68,6 @@ const Search: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
                 <ActionButton
                   user_id1={user.user_id!}
                   user_id2={res.user_id!}
-                  setIsFriend={null}
                 />
               </div>
             )
