@@ -110,7 +110,7 @@ const Password = ({ user, theme }: UserThemeProps) => {
       <p className="mb-4">
         Ensure your account is using a long, random password to stay secure.
       </p>
-      <form onSubmit={handleFormSubmit}>
+      <form onSubmit={handleFormSubmit} className="settings-form">
         <label htmlFor="currentPassword" className="form-label fw-medium">
           Current Password
         </label>

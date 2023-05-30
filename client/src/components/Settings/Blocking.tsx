@@ -89,12 +89,12 @@ const Password = ({ user, theme }: UserThemeProps) => {
         your timeline, or add you as a friend.
       </p>
       <div>
-        <form className="d-flex flex-column gap-2" onSubmit={handleFormSubmit}>
+        <form className="d-flex flex-column gap-2 settings-form" onSubmit={handleFormSubmit}>
           <div className="d-flex gap-2">
             <input
               type="email"
               className="form-control"
-              placeholder="Type the complete email of the person"
+              placeholder="Email of the user to block"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
