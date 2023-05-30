@@ -149,7 +149,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({
           data-bs-placement="top"
           data-bs-title="You can block or unblock users from the settings page"
         >
-          <img src={Info} className="width-1rem" />
+          <img src={Info} className="width-1-5rem" />
         </i>
       )}
     </div>

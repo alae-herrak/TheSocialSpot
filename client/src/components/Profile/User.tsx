@@ -83,7 +83,7 @@ const Profile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
               )}
               {!posts.length && (
                 <div className="w-100 d-flex justify-content-center align-items-center">
-                  <b>{targetUser?.fullName}</b>&nbsp;has no posts yet.
+                  <b>{targetUser?.fullName}</b>&nbsp;hasn't posted yet.
                 </div>
               )}
               {posts.map((post) => (
