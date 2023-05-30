@@ -14,3 +14,4 @@ export { default as HeartDark } from "./heart-dark.png";
 export { default as HeartLight } from "./heart-light.png";
 export { default as CommentDark } from "./comment-dark.png";
 export { default as CommentLight } from "./comment-light.png";
+export { default as Info } from "./info.png";

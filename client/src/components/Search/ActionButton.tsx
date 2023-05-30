@@ -8,6 +8,7 @@ import {
   updateRelation,
 } from "../../api/relation";
 import { ActionButtonProps, Relation } from "../../types";
+import { Info } from "../../assets/images";
 
 const ActionButton: React.FC<ActionButtonProps> = ({ user_id1, user_id2 }) => {
   const navigate = useNavigate();
@@ -16,14 +17,15 @@ const ActionButton: React.FC<ActionButtonProps> = ({ user_id1, user_id2 }) => {
   const [relationId, setRelationId] = useState<number>();
   const [loading, setLoading] = useState<boolean>(false);
 
+  const location = window.location.pathname.substring(0, 5);
+
   getRelationOfTwoUserIds(user_id1, user_id2)
     .then((res) => {
       if (!res.data) setAction("Add friend");
       else {
         setRelationId(res.data.relation_id);
         if (res.data.state === "friends") {
-          if (window.location.pathname.substring(0, 5) === "/user")
-            setAction("Remove friend");
+          if (location === "/user") setAction("Remove friend");
           else setAction("View profile");
         }
         if (res.data.state === "blocked") setAction("Blocked");
@@ -114,21 +116,40 @@ const ActionButton: React.FC<ActionButtonProps> = ({ user_id1, user_id2 }) => {
     }
   };
 
+  const tooltipTriggerList = document.querySelectorAll(
+    '[data-bs-toggle="tooltip"]'
+  );
+  const tooltipList = [...tooltipTriggerList].map(
+    // @ts-ignore
+    (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+  );
+
   return (
-    <button
-      onClick={handleButtonClick}
-      disabled={action === "Blocked" ? true : false}
-      className={`btn btn-${
-        action === "View profile"
-          ? "primary"
-          : action === "Blocked"
-          ? "danger"
-          : "secondary"
-      } btn-sm d-flex align-items-center gap-2`}
-    >
-      <span>{action}</span>
-      {loading && <div className="spinner-border spinner-border-sm"></div>}
-    </button>
+    <div className="d-flex align-items-center gap-2">
+      <button
+        onClick={handleButtonClick}
+        disabled={action === "Blocked" ? true : false}
+        className={`btn btn-${
+          action === "View profile"
+            ? "primary"
+            : action === "Blocked"
+            ? "danger"
+            : "secondary"
+        } btn-sm d-flex align-items-center gap-2`}
+      >
+        <span>{action}</span>
+        {loading && <div className="spinner-border spinner-border-sm"></div>}
+      </button>
+      {action === "Blocked" && location === "/user" && (
+        <i
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          data-bs-title="You can block or unblock users from the settings page"
+        >
+          <img src={Info} className="width-1rem" />
+        </i>
+      )}
+    </div>
   );
 };
 
