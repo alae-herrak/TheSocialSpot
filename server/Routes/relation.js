@@ -3,6 +3,7 @@ import {
   _createRelation,
   _deleteRelation,
   _getAllRelations,
+  _getBlockingsOfUserId,
   _getRelationById,
   _getRelationOfTwoUserIds,
   _getRelationsOfUserId,
@@ -20,6 +21,7 @@ router.get("/", _getAllRelations);
 router.get("/relation_id/:relation_id", _getRelationById);
 router.get("/user_id/:user_id", _getRelationsOfUserId);
 router.get("/ofTwoUsers", auth, _getRelationOfTwoUserIds);
+router.get("/blockings", auth, _getBlockingsOfUserId);
 
 // Patch Requests
 router.patch("/", auth, _updateRelation);

@@ -2,6 +2,7 @@ import {
   createRelation,
   deleteRelation,
   getAllRelations,
+  getBlockingsOfUserId,
   getRelationById,
   getRelationOfTwoUserIds,
   getRelationsOfUserId,
@@ -50,6 +51,16 @@ export const _getRelationOfTwoUserIds = async (req, res) => {
     const { user_id1, user_id2 } = req.query;
     const relation = await getRelationOfTwoUserIds(user_id1, user_id2);
     res.send(relation ? relation : false);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const _getBlockingsOfUserId = async (req, res) => {
+  try {
+    const { user_id } = req.user;
+    const relations = await getBlockingsOfUserId(user_id);
+    res.send(relations);
   } catch (error) {
     res.send(error);
   }

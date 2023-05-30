@@ -8,13 +8,11 @@ import App from "./App";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <GoogleOAuthProvider  clientId={import.meta.env.VITE_CLIENTID}>
-          <App />
-        </GoogleOAuthProvider>
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <Provider store={store}>
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENTID}>
+        <App />
+      </GoogleOAuthProvider>
+    </Provider>
+  </BrowserRouter>
 );

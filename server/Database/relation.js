@@ -38,6 +38,14 @@ export const getRelationOfTwoUserIds = async (user_id1, user_id2) => {
   return result[0];
 };
 
+export const getBlockingsOfUserId = async (user_id) => {
+  const [result] = await pool.query(
+    `SELECT * FROM relations WHERE user_id1 = ? AND state = 'blocked'`,
+    [user_id]
+  );
+  return result;
+};
+
 export const updateRelation = async (relation_id, state) => {
   const [result] = await pool.query(
     `UPDATE relations SET state = ? WHERE relation_id = ?`,

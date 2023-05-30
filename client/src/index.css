@@ -9,12 +9,12 @@
   }
 }
 @media (max-width:576px){
-  .settings-form {
+  .settings-form, .settings-table {
     width: 100%;
   }
 }
 @media (min-width:992px){
-  .settings-form {
+  .settings-form, .settings-table {
     width: 50%;
   }
 }

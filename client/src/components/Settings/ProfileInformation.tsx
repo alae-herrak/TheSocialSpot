@@ -134,7 +134,7 @@ const ProfileInformation = ({ user, theme }: UserThemeProps) => {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <label htmlFor="profilePicture" className="form-label fw-medium">
+        <label htmlFor="file" className="form-label fw-medium">
           Profile Picture
         </label>
         <div>

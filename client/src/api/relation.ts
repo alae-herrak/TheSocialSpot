@@ -32,3 +32,7 @@ export const updateRelation = async (relation_id: number, state: string) => {
 export const deleteRelation = async (relation_id: number) => {
   return await API.delete(`/${relation_id}`);
 };
+
+export const getBlockingsOfUserId = async () => {
+  return await API.get<Relation[]>("/blockings");
+};
