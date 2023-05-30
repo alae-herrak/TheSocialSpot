@@ -10,7 +10,11 @@ import {
 import { ActionButtonProps, Relation } from "../../types";
 import { Info } from "../../assets/images";
 
-const ActionButton: React.FC<ActionButtonProps> = ({ user_id1, user_id2 }) => {
+const ActionButton: React.FC<ActionButtonProps> = ({
+  user_id1,
+  user_id2,
+  setIsFriend,
+}) => {
   const navigate = useNavigate();
 
   const [action, setAction] = useState<string>("");
@@ -25,6 +29,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({ user_id1, user_id2 }) => {
       else {
         setRelationId(res.data.relation_id);
         if (res.data.state === "friends") {
+          setIsFriend!(true);
           if (location === "/user") setAction("Remove friend");
           else setAction("View profile");
         }

@@ -74,4 +74,5 @@ export type Relation = {
 export type ActionButtonProps = {
   user_id1: number;
   user_id2: number;
-}
+  setIsFriend: React.Dispatch<React.SetStateAction<boolean>> | null;
+};

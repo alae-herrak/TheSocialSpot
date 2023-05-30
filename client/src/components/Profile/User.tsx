@@ -9,6 +9,7 @@ const Profile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
   const { user_id } = useParams<string>();
 
   const [targetUser, setTargetUser] = useState<User>();
+  const [isFriend, setIsFriend] = useState<boolean>(false);
 
   useEffect(() => {
     getUserById(parseInt(user_id!))
@@ -41,9 +42,12 @@ const Profile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
           <ActionButton
             user_id1={user.user_id!}
             user_id2={targetUser?.user_id!}
+            setIsFriend={setIsFriend}
           />
         </div>
-        <div className="col-12 col-md-8 p-0 px-md-2 my-2"></div>
+        <div className="col-12 col-md-8 p-0 px-md-2 my-2">
+          {isFriend && "posts"}
+        </div>
       </div>
     </div>
   );
