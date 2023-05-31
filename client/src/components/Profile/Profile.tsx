@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 
 import { Post, UserThemeProps } from "../../types";
 import { getPostsOfUserId } from "../../api/post";
 import POST from "../Home/Post";
-import { Navigate } from "react-router-dom";
 
 const Profile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -61,6 +61,7 @@ const Profile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
               date={post.date}
               textContent={post.textContent}
               photo={post.photo}
+              user_id={undefined}
             />
           ))}
         </div>

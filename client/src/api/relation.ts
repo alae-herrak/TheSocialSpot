@@ -36,3 +36,7 @@ export const deleteRelation = async (relation_id: number) => {
 export const getBlockingsOfUserId = async () => {
   return await API.get<Relation[]>("/blockings");
 };
+
+export const getRelationsOfUserId = async (user_id: number) => {
+  return await API.get<Relation[]>(`/user_id/${user_id}`);
+};

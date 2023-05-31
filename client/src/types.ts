@@ -62,6 +62,7 @@ export type PostProps = {
   date: Date;
   textContent: string;
   photo: string;
+  user_id: number | undefined;
 };
 
 export type Relation = {

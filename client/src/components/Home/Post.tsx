@@ -1,10 +1,13 @@
-import { PostProps } from "../../types";
+import { useEffect, useState } from "react";
+
+import { PostProps, User } from "../../types";
 import {
   CommentDark,
   CommentLight,
   HeartDark,
   HeartLight,
 } from "../../assets/images";
+import { getUserById } from "../../api/user";
 
 const Post = ({
   theme,
@@ -13,9 +16,15 @@ const Post = ({
   date,
   textContent,
   photo,
+  user_id,
 }: PostProps) => {
   const postDate = new Date(date);
   const formatedDate = postDate.toDateString();
+  const [user, setUser] = useState<User>();
+
+  useEffect(() => {
+    user_id && getUserById(user_id).then((res) => setUser(res.data));
+  }, []);
 
   return (
     <div
@@ -25,15 +34,15 @@ const Post = ({
     >
       <div className="d-flex align-items-center mb-3">
         <img
-          src={profilePicture}
+          src={user?.profilePicture || profilePicture}
           style={{
             aspectRatio: "1/1",
             objectFit: "contain",
             backgroundColor: theme === "light" ? "white" : "black",
           }}
-          className="width-2rem rounded-circle me-2"
+          className="width-2rem rounded-circle me-2 border border-1 border-dark-subtle"
         />
-        <h6 className="m-0 me-1">{fullName}</h6>
+        <h6 className="m-0 me-1">{user?.fullName || fullName}</h6>
         <small>| {formatedDate}</small>
       </div>
       {textContent && (
