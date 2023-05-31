@@ -37,6 +37,12 @@ export type UserThemeProps = {
   theme: string;
 };
 
+export type UserThemeUpdateFeedProps = {
+  user: User;
+  theme: string;
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>>
+}
+
 export type Post = {
   post_id: number;
   user_id: number;

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 import { UploadImage } from "../../assets/images";
-import { PostToCreate, UserThemeProps } from "../../types";
+import { PostToCreate, UserThemeUpdateFeedProps } from "../../types";
 import { createPost } from "../../api/post";
 
-const NewPost = ({ user, theme }: UserThemeProps) => {
+const NewPost = ({ user, theme, setPosts }: UserThemeUpdateFeedProps) => {
   const [textContent, setTextContent] = useState<string>("");
   const [photo, setPhoto] = useState<string>("");
   const [postable, setPostable] = useState<boolean>(false);
@@ -40,7 +40,8 @@ const NewPost = ({ user, theme }: UserThemeProps) => {
       edited: false,
     };
     createPost(post)
-      .then(() => {
+      .then((res) => {
+        setPosts((prev) => [res.data, ...prev]);
         setTextContent("");
         setPhoto("");
       })

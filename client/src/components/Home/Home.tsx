@@ -11,9 +11,11 @@ import POST from "./Post";
 const Home: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.user!);
   const theme = useSelector((state: RootState) => state.theme.theme);
+
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
+    setPosts([]);
     getRelationsOfUserId(user.user_id!)
       .then((res) => {
         if (res.data) {
@@ -47,7 +49,7 @@ const Home: React.FC = () => {
       {!user?.user_id && <Navigate to="/login" />}
       <div className="container">
         <div className="row p-2">
-          <NewPost user={user} theme={theme} />
+          <NewPost user={user} theme={theme} setPosts={setPosts} />
           <div className="col-0 col-lg-1"></div>
           <div className="col-12 col-lg-5 p-0 ">
             {posts.map((post) => (
