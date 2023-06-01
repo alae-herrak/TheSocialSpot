@@ -40,8 +40,8 @@ export type UserThemeProps = {
 export type UserThemeUpdateFeedProps = {
   user: User;
   theme: string;
-  setPosts: React.Dispatch<React.SetStateAction<Post[]>>
-}
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+};
 
 export type Post = {
   post_id: number;
@@ -71,7 +71,7 @@ export type PostProps = {
   textContent: string;
   photo: string;
   user_id: number | undefined;
-  setPosts: React.Dispatch<React.SetStateAction<Post[]>> | undefined
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>> | undefined;
 };
 
 export type Relation = {
@@ -84,4 +84,15 @@ export type Relation = {
 export type ActionButtonProps = {
   user_id1: number;
   user_id2: number;
+};
+
+export type Like = {
+  like_id: number | undefined;
+  type: "post" | "comment";
+  target_id: number;
+  user_id: number;
+};
+
+export type LikeCount = {
+  [key: string]: number;
 };

@@ -13,6 +13,12 @@ import {
 } from "../../assets/images";
 import { getUserById } from "../../api/user";
 import { deletePost } from "../../api/post";
+import {
+  createPostLike,
+  getPostLikeCount,
+  getPostLikeUserIds,
+  deleteLike,
+} from "../../api/like";
 
 const Post = ({
   loggedUserId,
@@ -29,9 +35,20 @@ const Post = ({
   const postDate = new Date(date);
   const formatedDate = postDate.toDateString();
   const [user, setUser] = useState<User>();
+  const [likeCount, setLikeCount] = useState<number>(0);
+  const [userLiked, setUserLiked] = useState<boolean>(false);
 
   useEffect(() => {
     user_id && getUserById(user_id).then((res) => setUser(res.data));
+    getPostLikeCount(post_id).then((res) => {
+      setLikeCount(res.data["count(*)"]);
+    });
+    getPostLikeUserIds(post_id).then((res) => {
+      if (res.data.length) {
+        if (res.data.find((e) => e.user_id === loggedUserId))
+          setUserLiked(true);
+      }
+    });
   }, []);
 
   const handleDeletePost = () => {
@@ -40,6 +57,20 @@ const Post = ({
         setPosts!((prev) => prev.filter((p) => p.post_id !== post_id));
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleLikeButtonClick = () => {
+    if (userLiked) {
+      deleteLike(loggedUserId).then(() => {
+        setLikeCount((prev) => prev - 1);
+        setUserLiked(false);
+      });
+    } else {
+      createPostLike(post_id, loggedUserId).then(() => {
+        setLikeCount((prev) => prev + 1);
+        setUserLiked(true);
+      });
+    }
   };
 
   return (
@@ -102,12 +133,17 @@ const Post = ({
         </div>
       )}
       <div className="d-flex">
-        <button className="btn p-1 me-2 d-flex align-items-center">
+        <button
+          className="btn p-1 me-2 d-flex align-items-center border-0"
+          onClick={handleLikeButtonClick}
+        >
           <img
-            src={theme === "light" ? HeartDark : HeartLight}
+            src={
+              userLiked ? HeartFull : theme === "light" ? HeartDark : HeartLight
+            }
             className="width-1-5rem me-1 rounded-circle"
           />
-          <span className="fw-bold">0</span>
+          <span className="fw-bold">{likeCount}</span>
         </button>
         <button className="btn p-1 d-flex align-items-center">
           <img

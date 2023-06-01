@@ -58,8 +58,8 @@ export const _getTargetIdUsers = async (req, res) => {
 
 export const _deleteLike = async (req, res) => {
   try {
-    const { like_id } = req.body;
-    const result = await deleteLike(like_id);
+    const { user_id } = req.body;
+    const result = await deleteLike(user_id);
     res.send(result);
   } catch (error) {
     res.send(error);
