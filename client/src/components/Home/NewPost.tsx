@@ -56,6 +56,7 @@ const NewPost = ({ user, theme, setPosts }: UserThemeUpdateFeedProps) => {
     >
       <form className="w-100" onSubmit={handleFormSubmit}>
         <textarea
+          name="text content"
           className="form-control mb-3"
           rows={1}
           onFocus={(e) => e.target.setAttribute("rows", "3")}

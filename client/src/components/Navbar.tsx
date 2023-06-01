@@ -66,6 +66,7 @@ const Navbar: React.FC = () => {
                 <div className="input-group">
                   <input
                     type="text"
+                    name="search term"
                     className="form-control form-control-sm border-0 shadow-none bg-white text-black"
                     placeholder="Search users ..."
                     value={searchTerm}
