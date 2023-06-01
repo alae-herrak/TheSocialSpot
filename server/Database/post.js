@@ -27,3 +27,10 @@ export const getPostsOfUserId = async (user_id) => {
   ]);
   return result;
 };
+
+export const deletePost = async (post_id) => {
+  const [result] = await pool.query(`DELETE FROM posts WHERE post_id = ?`, [
+    post_id,
+  ]);
+  return result.affectedRows === 1;
+};

@@ -54,14 +54,17 @@ const Home: React.FC = () => {
           <div className="col-12 col-lg-5 p-0 ">
             {posts.map((post) => (
               <POST
+                loggedUserId={user.user_id!}
                 theme={theme}
                 key={post.post_id}
+                post_id={post.post_id}
                 profilePicture=""
                 fullName=""
                 date={post.date}
                 textContent={post.textContent}
                 photo={post.photo}
                 user_id={post.user_id}
+                setPosts={setPosts}
               />
             ))}
           </div>

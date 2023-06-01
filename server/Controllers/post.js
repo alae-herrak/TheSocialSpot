@@ -1,4 +1,10 @@
-import { createPost, getAllPosts, getPostById, getPostsOfUserId } from "../Database/post.js";
+import {
+  createPost,
+  deletePost,
+  getAllPosts,
+  getPostById,
+  getPostsOfUserId,
+} from "../Database/post.js";
 
 export const _createPost = async (req, res) => {
   try {
@@ -32,6 +38,16 @@ export const _getPostsOfUserId = async (req, res) => {
   try {
     const posts = await getPostsOfUserId(req.params.user_id);
     res.send(posts);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const _deletePost = async (req, res) => {
+  try {
+    const { post_id } = req.body;
+    const result = await deletePost(post_id);
+    res.send(result);
   } catch (error) {
     res.send(error);
   }

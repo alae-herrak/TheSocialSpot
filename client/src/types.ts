@@ -61,14 +61,17 @@ export type PostToCreate = {
 };
 
 export type PostProps = {
+  loggedUserId: number;
   theme: string;
   key: number;
+  post_id: number;
   profilePicture: string;
   fullName: string;
   date: Date;
   textContent: string;
   photo: string;
   user_id: number | undefined;
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>> | undefined
 };
 
 export type Relation = {

@@ -54,14 +54,17 @@ const Profile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
           )}
           {posts.map((post) => (
             <POST
+              loggedUserId={user.user_id!}
               theme={theme}
               key={post.post_id}
+              post_id={post.post_id}
               profilePicture={user.profilePicture}
               fullName={user.fullName}
               date={post.date}
               textContent={post.textContent}
               photo={post.photo}
               user_id={undefined}
+              setPosts={undefined}
             />
           ))}
         </div>

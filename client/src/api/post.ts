@@ -19,3 +19,7 @@ export const createPost = async (post: PostToCreate) => {
 export const getPostsOfUserId = async (user_id: number) => {
   return await API.get<Post[]>(`/user_id/${user_id}`);
 };
+
+export const deletePost = async (post_id: number) => {
+  return await API.delete<boolean>("/", { data: { post_id } });
+};
