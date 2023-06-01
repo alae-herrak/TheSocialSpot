@@ -29,6 +29,14 @@ export const getLikeCountOfTargetId = async (target_id) => {
   return result[0];
 };
 
+export const getTargetIdUsers = async (target_id) => {
+  const [result] = await pool.query(
+    "SELECT user_id FROM likes WHERE target_id = ?",
+    [target_id]
+  );
+  return result;
+};
+
 export const deleteLike = async (like_id) => {
   const [result] = await pool.query("DELETE FROM likes WHERE like_id = ?", [
     like_id,

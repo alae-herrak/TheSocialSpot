@@ -4,6 +4,7 @@ import {
   getAllLikes,
   getLikeById,
   getLikeCountOfTargetId,
+  getTargetIdUsers,
 } from "../Database/like.js";
 
 export const _createLike = async (req, res) => {
@@ -40,6 +41,16 @@ export const _getLikeCountOfTargetId = async (req, res) => {
     const { target_id } = req.params;
     const likes = await getLikeCountOfTargetId(target_id);
     res.send(likes);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const _getTargetIdUsers = async (req, res) => {
+  try {
+    const { target_id } = req.params;
+    const user_ids = await getTargetIdUsers(target_id);
+    res.send(user_ids);
   } catch (error) {
     res.send(error);
   }
