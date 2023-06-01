@@ -6,9 +6,12 @@ import {
   CommentLight,
   HeartDark,
   HeartLight,
+  HeartFull,
+  DotsDark,
+  DotsLight,
+  Delete,
 } from "../../assets/images";
 import { getUserById } from "../../api/user";
-import { DotsDark, DotsLight } from "../../assets/images";
 import { deletePost } from "../../api/post";
 
 const Post = ({
@@ -63,7 +66,7 @@ const Post = ({
         {user_id === loggedUserId && (
           <div className="dropdown">
             <button
-              className="btn p-0 d-flex align-items-center"
+              className="btn p-0 d-flex align-items-center border-0"
               type="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
@@ -76,7 +79,11 @@ const Post = ({
             </button>
             <ul className="dropdown-menu">
               <li>
-                <button className="dropdown-item" onClick={handleDeletePost}>
+                <button
+                  className="dropdown-item d-flex align-items-center gap-1 text-danger"
+                  onClick={handleDeletePost}
+                >
+                  <img src={Delete} className="width-1-5rem" alt="" />
                   Delete post
                 </button>
               </li>
