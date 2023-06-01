@@ -20,6 +20,7 @@ import {
   deleteLike,
 } from "../../api/like";
 import { Link } from "react-router-dom";
+import PostLikes from "./PostLikes";
 
 const Post = ({
   loggedUserId,
@@ -137,18 +138,16 @@ const Post = ({
         </div>
       )}
       <div className="d-flex">
-        <button
-          className="btn p-1 me-2 d-flex align-items-center border-0"
-          onClick={handleLikeButtonClick}
-        >
+        <div className="btn p-1 me-2 d-flex align-items-center border-0">
           <img
             src={
               userLiked ? HeartFull : theme === "light" ? HeartDark : HeartLight
             }
             className="width-1-5rem me-1 rounded-circle"
+            onClick={handleLikeButtonClick}
           />
-          <span className="fw-bold">{likeCount}</span>
-        </button>
+          <PostLikes post_id={post_id} likeCount={likeCount} theme={theme} loggedUserId={loggedUserId}/>
+        </div>
         <button className="btn p-1 d-flex align-items-center">
           <img
             src={theme === "light" ? CommentDark : CommentLight}

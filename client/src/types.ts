@@ -97,3 +97,10 @@ export type Like = {
 export type LikeCount = {
   [key: string]: number;
 };
+
+export type PostLikesProps = {
+  post_id: number;
+  likeCount: number;
+  theme: string;
+  loggedUserId: number;
+}
