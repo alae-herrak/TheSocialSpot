@@ -8,7 +8,7 @@ import { getPostsOfUserId } from "../../api/post";
 import POST from "../Home/Post";
 import { getRelationOfTwoUserIds } from "../../api/relation";
 
-const Profile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
+const UserProfile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
   const { user_id } = useParams<string>();
 
   const [targetUser, setTargetUser] = useState<User>();
@@ -49,6 +49,7 @@ const Profile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
   return (
     <div className="container">
       {!user.user_id && <Navigate to="/login" />}
+      {user.user_id===parseInt(user_id!) && <Navigate to="/profile" />}
       <div className="row">
         <div
           className={`col-12 col-md-4 h-100 d-flex flex-column align-items-center rounded-3 my-2 py-5 border border-1 border-dark-subtle bg-${
@@ -71,6 +72,7 @@ const Profile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
           <ActionButton
             user_id1={user.user_id!}
             user_id2={targetUser?.user_id!}
+            setIsFriend={setIsFriend}
           />
         </div>
         <div className="col-12 col-md-8 p-0 px-md-2 my-2">
@@ -113,4 +115,4 @@ const Profile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
   );
 };
 
-export default Profile;
+export default UserProfile;

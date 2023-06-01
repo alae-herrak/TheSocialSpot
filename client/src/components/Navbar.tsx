@@ -50,12 +50,12 @@ const Navbar: React.FC = () => {
       }`}
     >
       <div className="container">
-        <Link to="/" className="navbar-brand d-flex align-items-center">
+        <a href="/" className="navbar-brand d-flex align-items-center">
           <img src={NavLogo} alt="" className="width-2rem me-2" />
           <span className="d-none d-md-block">
             the<span className="fw-bold">SocialSpot</span>
           </span>
-        </Link>
+        </a>
         <div className="justify-content-end" id="navbarSupportedContent">
           <ul className="navbar-nav d-flex flex-row align-items-center">
             <li className="nav-item me-4">

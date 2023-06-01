@@ -33,6 +33,7 @@ const Password = ({ user, theme }: UserThemeProps) => {
     e.preventDefault();
     if (email.trim() === "") setErrorMessage("Please enter a valid email");
     else {
+      if (email === user.email) return;
       getUserByEmail(email).then((res) => {
         if (!res.data)
           setErrorMessage("No user was found with the specified email");
@@ -89,7 +90,10 @@ const Password = ({ user, theme }: UserThemeProps) => {
         your timeline, or add you as a friend.
       </p>
       <div>
-        <form className="d-flex flex-column gap-2 settings-form" onSubmit={handleFormSubmit}>
+        <form
+          className="d-flex flex-column gap-2 settings-form"
+          onSubmit={handleFormSubmit}
+        >
           <div className="d-flex gap-2">
             <input
               type="email"
@@ -112,7 +116,7 @@ const Password = ({ user, theme }: UserThemeProps) => {
         </form>
       </div>
       <div>
-        {blockedUsers.length? <p className="fw-bold">Blocked users</p>:''}
+        {blockedUsers.length ? <p className="fw-bold">Blocked users</p> : ""}
         {loading && <div className="spinner-border"></div>}
         <table className="table settings-table">
           <tbody>

@@ -13,6 +13,7 @@ import { Info } from "../../assets/images";
 const ActionButton: React.FC<ActionButtonProps> = ({
   user_id1,
   user_id2,
+  setIsFriend,
 }) => {
   const navigate = useNavigate();
 
@@ -77,6 +78,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({
           if (res.data) {
             setAction("View profile");
             setLoading(false);
+            setIsFriend!(true);
           }
         })
         .catch((err) => {
@@ -107,6 +109,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({
           if (res.data) {
             setAction("Add friend");
             setLoading(false);
+            setIsFriend!(false);
           }
         })
         .catch((err) => {

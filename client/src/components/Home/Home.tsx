@@ -64,6 +64,7 @@ const Home: React.FC = () => {
             </div>
           )}
           <div className={`col-12 col-lg-5 p-0 ${loading ? "d-none" : ""}`}>
+            {!posts.length && <div className="p-5 text-center">No posts to show</div>}
             {posts.map((post) => (
               <POST
                 loggedUserId={user.user_id!}
