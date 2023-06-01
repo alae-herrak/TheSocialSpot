@@ -88,6 +88,7 @@ const Profile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
               )}
               {posts.map((post) => (
                 <POST
+                  loggedUserId={user.user_id!}
                   theme={theme}
                   key={post.post_id}
                   profilePicture={targetUser!.profilePicture}
@@ -95,6 +96,9 @@ const Profile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
                   date={post.date}
                   textContent={post.textContent}
                   photo={post.photo}
+                  post_id={post.post_id}
+                  user_id={post.user_id}
+                  setPosts={undefined}
                 />
               ))}
             </>

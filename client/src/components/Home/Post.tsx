@@ -19,6 +19,7 @@ import {
   getPostLikeUserIds,
   deleteLike,
 } from "../../api/like";
+import { Link } from "react-router-dom";
 
 const Post = ({
   loggedUserId,
@@ -80,7 +81,10 @@ const Post = ({
       } rounded-2 border border-1 border-dark-subtle p-3 mb-3`}
     >
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <div className="d-flex align-items-center">
+        <Link
+          to={user_id === loggedUserId ? "/profile" : `/user/${user_id}`}
+          className="d-flex align-items-center text-decoration-none text-body"
+        >
           <img
             src={user?.profilePicture || profilePicture}
             style={{
@@ -92,7 +96,7 @@ const Post = ({
           />
           <h6 className="m-0 me-1">{user?.fullName || fullName}</h6>
           <small>| {formatedDate}</small>
-        </div>
+        </Link>
 
         {user_id === loggedUserId && (
           <div className="dropdown">

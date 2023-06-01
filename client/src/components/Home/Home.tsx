@@ -13,6 +13,7 @@ const Home: React.FC = () => {
   const theme = useSelector((state: RootState) => state.theme.theme);
 
   const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setPosts([]);
@@ -44,6 +45,10 @@ const Home: React.FC = () => {
 
   posts.sort((a, b) => b.post_id - a.post_id);
 
+  setTimeout(() => {
+    setLoading(false);
+  }, 1500);
+
   return (
     <>
       {!user?.user_id && <Navigate to="/login" />}
@@ -51,7 +56,14 @@ const Home: React.FC = () => {
         <div className="row p-2">
           <NewPost user={user} theme={theme} setPosts={setPosts} />
           <div className="col-0 col-lg-1"></div>
-          <div className="col-12 col-lg-5 p-0 ">
+          {loading && (
+            <div className="col-12 col-lg-5 p-0">
+              <div className="p-5 d-flex justify-content-center align-items-center">
+                <div className="spinner-border"></div>
+              </div>
+            </div>
+          )}
+          <div className={`col-12 col-lg-5 p-0 ${loading ? "d-none" : ""}`}>
             {posts.map((post) => (
               <POST
                 loggedUserId={user.user_id!}
