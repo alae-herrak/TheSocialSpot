@@ -56,7 +56,7 @@ const Comment: React.FC<CommentProps> = ({
   const handleLikeButtonClick = () => {
     if (userLiked) {
       getLikeId(comment_id, loggedUserId).then((res) => {
-        deleteLike(res.data['like_id']).then(() => {
+        deleteLike(res.data["like_id"]).then(() => {
           setLikeCount((prev) => prev - 1);
           setUserLiked(false);
         });
@@ -71,19 +71,26 @@ const Comment: React.FC<CommentProps> = ({
 
   return (
     <div className="d-flex align-items-start gap-2 m-2 ms-3">
-      <img
-        src={user?.profilePicture}
-        style={{
-          aspectRatio: "1/1",
-          objectFit: "contain",
-          backgroundColor: theme === "light" ? "white" : "black",
-        }}
-        className="rounded-circle mt-2 width-2rem border border-1 border-dark-subtle"
-        alt=""
-      />
+      <a href={user_id === loggedUserId ? "/profile" : `/user/${user_id}`}>
+        <img
+          src={user?.profilePicture}
+          style={{
+            aspectRatio: "1/1",
+            objectFit: "contain",
+            backgroundColor: theme === "light" ? "white" : "black",
+          }}
+          className="rounded-circle mt-2 width-2rem border border-1 border-dark-subtle"
+          alt=""
+        />
+      </a>
       <div className="d-flex flex-column p-2 shadow-sm border border-1 rounded-3 w-100">
         <div className="d-flex justify-content-between align-items-center">
-          <h6 className="fw-bold">{user?.fullName}</h6>
+          <a
+            href={user_id === loggedUserId ? "/profile" : `/user/${user_id}`}
+            className="text-decoration-none text-body"
+          >
+            <h6 className="fw-bold">{user?.fullName}</h6>
+          </a>
           {user_id === loggedUserId && (
             <div className="dropdown">
               <button

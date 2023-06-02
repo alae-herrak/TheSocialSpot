@@ -77,7 +77,7 @@ const PostLikes: React.FC<PostLikesProps> = ({
                         objectFit: "contain",
                         backgroundColor: theme === "light" ? "white" : "black",
                       }}
-                      className="width-2-5rem rounded-circle"
+                      className="width-2-5rem rounded-circle border border-1 border-dark-subtle"
                       alt=""
                     />
                     <p className="m-0">{user.fullName}</p>
