@@ -113,7 +113,7 @@ const Comment: React.FC<CommentProps> = ({
           )}
         </div>
         <p className="m-0">{comment}</p>
-        <div>
+        <div className="mt-2">
           <button
             className="btn p-0 d-flex align-items-center border-0"
             onClick={() => handleLikeButtonClick()}
