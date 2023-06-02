@@ -21,6 +21,8 @@ import {
 } from "../../api/like";
 import { Link } from "react-router-dom";
 import PostLikes from "./PostLikes";
+import PostComments from "./PostComments";
+import { getCommentsCountOfPostId } from "../../api/comment";
 
 const Post = ({
   loggedUserId,
@@ -39,6 +41,7 @@ const Post = ({
   const [user, setUser] = useState<User>();
   const [likeCount, setLikeCount] = useState<number>(0);
   const [userLiked, setUserLiked] = useState<boolean>(false);
+  const [commentCount, setCommentCount] = useState<number>(0);
 
   useEffect(() => {
     user_id && getUserById(user_id).then((res) => setUser(res.data));
@@ -50,6 +53,9 @@ const Post = ({
         if (res.data.find((e) => e.user_id === loggedUserId))
           setUserLiked(true);
       }
+    });
+    getCommentsCountOfPostId(post_id).then((res) => {
+      setCommentCount(res.data["count(*)"]);
     });
   }, []);
 
@@ -120,7 +126,7 @@ const Post = ({
                   onClick={handleDeletePost}
                 >
                   <img src={Delete} className="width-1-5rem" alt="" />
-                  Delete post
+                  Delete
                 </button>
               </li>
             </ul>
@@ -143,18 +149,22 @@ const Post = ({
             src={
               userLiked ? HeartFull : theme === "light" ? HeartDark : HeartLight
             }
-            className="width-1-5rem me-1 rounded-circle"
+            className="width-1-5rem me-1"
             onClick={handleLikeButtonClick}
           />
-          <PostLikes post_id={post_id} likeCount={likeCount} theme={theme} loggedUserId={loggedUserId}/>
-        </div>
-        <button className="btn p-1 d-flex align-items-center">
-          <img
-            src={theme === "light" ? CommentDark : CommentLight}
-            className="width-1-5rem me-1"
+          <PostLikes
+            post_id={post_id}
+            likeCount={likeCount}
+            theme={theme}
+            loggedUserId={loggedUserId}
           />
-          <span className="fw-bold">0</span>
-        </button>
+        </div>
+        <PostComments
+          post_id={post_id}
+          commentCount={commentCount}
+          theme={theme}
+          loggedUserId={loggedUserId}
+        />
       </div>
     </div>
   );

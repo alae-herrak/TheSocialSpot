@@ -1,3 +1,23 @@
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: #525252 #ffffff;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #ffffff00;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #525252;
+    border-radius: 10px;
+  }
 @media (max-width: 1200px) {
   form {
     width: 75%;
@@ -23,6 +43,9 @@
 }
 .full-width {
   width: 100vw;
+}
+.height-75 {
+  height: 75vh;
 }
 .custom-background-light {
   background-color: #0021ff;

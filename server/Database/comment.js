@@ -2,7 +2,7 @@ import pool from "./database.js";
 
 export const createComment = async (post_id, user_id, comment) => {
   const [result] = await pool.query(
-    `INSERT INTO comments (post_id, user_id, comment) VALUES (?, ?, ?)`,
+    `INSERT INTO comments (post_id, user_id, comment, edited) VALUES (?, ?, ?, false)`,
     [post_id, user_id, comment]
   );
   const comment_id = result.insertId;

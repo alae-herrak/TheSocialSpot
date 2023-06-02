@@ -103,4 +103,32 @@ export type PostLikesProps = {
   likeCount: number;
   theme: string;
   loggedUserId: number;
+};
+
+export type Comment = {
+  comment_id: number | undefined;
+  post_id: number;
+  user_id: number;
+  comment: string;
+  edited: boolean | undefined;
+};
+
+export type CommentCount = {
+  [key: string]: number;
+};
+
+export type PostCommentsProps = {
+  post_id: number;
+  commentCount: number;
+  theme: string;
+  loggedUserId: number;
+};
+
+export type CommentProps = {
+  comment_id: number;
+  user_id: number;
+  comment: string;
+  theme: string;
+  loggedUserId: number;
+  setComments: React.Dispatch<React.SetStateAction<Comment[]>>
 }

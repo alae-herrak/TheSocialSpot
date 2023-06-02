@@ -33,3 +33,21 @@ export const getPostLikeUserIds = async (target_id: number) => {
 export const deleteLike = async (user_id: number) => {
   return await API.delete<boolean>("/", { data: { user_id } });
 };
+
+export const createCommentLike = async (target_id: number, user_id: number) => {
+  const like: Like = {
+    like_id: undefined,
+    type: "comment",
+    target_id,
+    user_id,
+  };
+  return await API.post<Like>("/", like);
+};
+
+export const getCommentLikeCount = async (target_id: number) => {
+  return await API.get<LikeCount>(`/likeCount/${target_id}`);
+};
+
+export const getCommentLikeUserIds = async (target_id: number) => {
+  return await API.get<{ user_id: number }[]>(`/userIds/${target_id}`);
+};
