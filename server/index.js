@@ -17,7 +17,7 @@ app.use("/users", UserRouter);
 app.use("/posts", PostRouter);
 app.use("/relations", RelationRouter);
 app.use("/likes", LikeRouter);
-app.user("/comments", CommentRouter);
+app.use("/comments", CommentRouter);
 
 app.listen(PORT, () =>
   console.log(`Server running on: http://localhost:${PORT}`)
