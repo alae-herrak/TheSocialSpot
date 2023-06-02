@@ -30,8 +30,8 @@ export const getPostLikeUserIds = async (target_id: number) => {
   return await API.get<{ user_id: number }[]>(`/userIds/${target_id}`);
 };
 
-export const deleteLike = async (user_id: number) => {
-  return await API.delete<boolean>("/", { data: { user_id } });
+export const deleteLike = async (like_id: number) => {
+  return await API.delete<boolean>("/", { data: { like_id } });
 };
 
 export const createCommentLike = async (target_id: number, user_id: number) => {
@@ -50,4 +50,10 @@ export const getCommentLikeCount = async (target_id: number) => {
 
 export const getCommentLikeUserIds = async (target_id: number) => {
   return await API.get<{ user_id: number }[]>(`/userIds/${target_id}`);
+};
+
+export const getLikeId = async (target_id: number, user_id: number) => {
+  return await API.get<{ like_id: number }>(
+    `/like_id?target_id=${target_id}&user_id=${user_id}`
+  );
 };

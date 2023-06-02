@@ -37,9 +37,18 @@ export const getTargetIdUsers = async (target_id) => {
   return result;
 };
 
-export const deleteLike = async (user_id) => {
-  const [result] = await pool.query("DELETE FROM likes WHERE user_id = ?", [
-    user_id,
-  ]);
+export const getLikeId = async (target_id, user_id) => {
+  const [result] = await pool.query(
+    "SELECT like_id FROM likes WHERE target_id = ? AND user_id = ?",
+    [target_id, user_id]
+  );
+  return result[0];
+};
+
+export const deleteLike = async (like_id) => {
+  const [result] = await pool.query(
+    "DELETE FROM likes WHERE like_id = ?",
+    [[like_id]]
+  );
   return result.affectedRows === 1;
 };

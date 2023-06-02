@@ -4,6 +4,7 @@ import {
   getAllLikes,
   getLikeById,
   getLikeCountOfTargetId,
+  getLikeId,
   getTargetIdUsers,
 } from "../Database/like.js";
 
@@ -56,10 +57,20 @@ export const _getTargetIdUsers = async (req, res) => {
   }
 };
 
+export const _getLikeId = async (req, res) => {
+  try {
+    const { target_id, user_id } = req.query;
+    const like_id = await getLikeId(target_id, user_id);
+    res.send(like_id);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
 export const _deleteLike = async (req, res) => {
   try {
-    const { user_id } = req.body;
-    const result = await deleteLike(user_id);
+    const { like_id } = req.body;
+    const result = await deleteLike(like_id);
     res.send(result);
   } catch (error) {
     res.send(error);

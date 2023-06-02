@@ -18,6 +18,7 @@ import {
   getPostLikeCount,
   getPostLikeUserIds,
   deleteLike,
+  getLikeId,
 } from "../../api/like";
 import { Link } from "react-router-dom";
 import PostLikes from "./PostLikes";
@@ -69,9 +70,11 @@ const Post = ({
 
   const handleLikeButtonClick = () => {
     if (userLiked) {
-      deleteLike(loggedUserId).then(() => {
-        setLikeCount((prev) => prev - 1);
-        setUserLiked(false);
+      getLikeId(post_id, loggedUserId).then((res) => {
+        deleteLike(res.data["like_id"]).then(() => {
+          setLikeCount((prev) => prev - 1);
+          setUserLiked(false);
+        });
       });
     } else {
       createPostLike(post_id, loggedUserId).then(() => {

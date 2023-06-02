@@ -16,6 +16,7 @@ import {
   deleteLike,
   getCommentLikeCount,
   getCommentLikeUserIds,
+  getLikeId,
 } from "../../api/like";
 
 const Comment: React.FC<CommentProps> = ({
@@ -54,9 +55,11 @@ const Comment: React.FC<CommentProps> = ({
 
   const handleLikeButtonClick = () => {
     if (userLiked) {
-      deleteLike(loggedUserId).then(() => {
-        setLikeCount((prev) => prev - 1);
-        setUserLiked(false);
+      getLikeId(comment_id, loggedUserId).then((res) => {
+        deleteLike(res.data['like_id']).then(() => {
+          setLikeCount((prev) => prev - 1);
+          setUserLiked(false);
+        });
       });
     } else {
       createCommentLike(comment_id, loggedUserId).then(() => {
