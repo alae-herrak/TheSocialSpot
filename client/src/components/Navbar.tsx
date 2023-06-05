@@ -143,7 +143,7 @@ const Navbar: React.FC = () => {
                   objectFit: "contain",
                   backgroundColor: theme === "light" ? "white" : "black",
                 }}
-                className="width-2rem p-0 rounded-circle"
+                className="width-2rem p-0 rounded-circle border border-1 border-dark-subtle"
                 role="button"
                 data-bs-toggle="modal"
                 data-bs-target="#profile"

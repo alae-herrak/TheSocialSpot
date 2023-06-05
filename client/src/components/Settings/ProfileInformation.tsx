@@ -143,7 +143,12 @@ const ProfileInformation = ({ user, theme }: UserThemeProps) => {
             referrerPolicy="no-referrer"
             alt=""
             width="64px"
-            className="img-fluid rounded-circle me-3"
+            style={{
+              aspectRatio: "1/1",
+              objectFit: "contain",
+              backgroundColor: theme === "light" ? "white" : "black",
+            }}
+            className="img-fluid rounded-circle me-3 border border-1 border-dark-subtle"
           />
           <label
             htmlFor="file"
