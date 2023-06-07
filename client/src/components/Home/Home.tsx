@@ -76,6 +76,7 @@ const Home: React.FC = () => {
                 date={post.date}
                 textContent={post.textContent}
                 photo={post.photo}
+                edited={post.edited}
                 user_id={post.user_id}
                 setPosts={setPosts}
               />

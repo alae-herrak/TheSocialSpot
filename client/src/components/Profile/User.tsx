@@ -8,7 +8,10 @@ import { getPostsOfUserId } from "../../api/post";
 import POST from "../Home/Post";
 import { getRelationOfTwoUserIds } from "../../api/relation";
 
-const UserProfile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
+const UserProfile: React.FC<UserThemeProps> = ({
+  user,
+  theme,
+}: UserThemeProps) => {
   const { user_id } = useParams<string>();
 
   const [targetUser, setTargetUser] = useState<User>();
@@ -49,7 +52,7 @@ const UserProfile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) 
   return (
     <div className="container">
       {!user.user_id && <Navigate to="/login" />}
-      {user.user_id===parseInt(user_id!) && <Navigate to="/profile" />}
+      {user.user_id === parseInt(user_id!) && <Navigate to="/profile" />}
       <div className="row">
         <div
           className={`col-12 col-md-4 h-100 d-flex flex-column align-items-center rounded-3 my-2 py-5 border border-1 border-dark-subtle bg-${
@@ -99,6 +102,7 @@ const UserProfile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) 
                   date={post.date}
                   textContent={post.textContent}
                   photo={post.photo}
+                  edited={post.edited}
                   post_id={post.post_id}
                   user_id={post.user_id}
                   setPosts={undefined}

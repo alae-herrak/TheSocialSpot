@@ -5,6 +5,7 @@ import {
   _getAllPosts,
   _getPostById,
   _getPostsOfUserId,
+  _updatePost,
 } from "../Controllers/post.js";
 import auth from "../middleware/auth.js";
 
@@ -17,6 +18,9 @@ router.post("/", auth, _createPost);
 router.get("/", _getAllPosts);
 router.get("/post_id/:post_id", _getPostById);
 router.get("/user_id/:user_id", auth, _getPostsOfUserId);
+
+// PATCH Requests
+router.patch("/", auth, _updatePost);
 
 // DELETE Requests
 router.delete("/", auth, _deletePost);

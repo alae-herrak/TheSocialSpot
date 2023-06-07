@@ -63,6 +63,7 @@ const Profile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
               date={post.date}
               textContent={post.textContent}
               photo={post.photo}
+              edited={post.edited}
               user_id={user.user_id}
               setPosts={setPosts}
             />

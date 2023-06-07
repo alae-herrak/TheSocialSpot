@@ -70,6 +70,7 @@ export type PostProps = {
   date: Date;
   textContent: string;
   photo: string;
+  edited: boolean;
   user_id: number | undefined;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>> | undefined;
 };

@@ -4,6 +4,7 @@ import {
   getAllPosts,
   getPostById,
   getPostsOfUserId,
+  updatePost,
 } from "../Database/post.js";
 
 export const _createPost = async (req, res) => {
@@ -38,6 +39,16 @@ export const _getPostsOfUserId = async (req, res) => {
   try {
     const posts = await getPostsOfUserId(req.params.user_id);
     res.send(posts);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const _updatePost = async (req, res) => {
+  try {
+    const { post_id, textContent, photo } = req.body;
+    const updatedPost = await updatePost(post_id, textContent, photo);
+    res.send(updatedPost);
   } catch (error) {
     res.send(error);
   }

@@ -28,6 +28,14 @@ export const getPostsOfUserId = async (user_id) => {
   return result;
 };
 
+export const updatePost = async (post_id, textContent, photo) => {
+  const [result] = await pool.query(
+    `UPDATE posts SET textContent = ?, photo = ?, date = ?, edited = ? WHERE post_id = ?`,
+    [textContent, photo, new Date(), true, post_id]
+  );
+  return getPostById(post_id);
+};
+
 export const deletePost = async (post_id) => {
   const [result] = await pool.query(`DELETE FROM posts WHERE post_id = ?`, [
     post_id,

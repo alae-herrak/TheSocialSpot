@@ -106,21 +106,21 @@ const Comment: React.FC<CommentProps> = ({
       </a>
       <div className="d-flex flex-column p-2 shadow-sm border border-1 rounded-3 w-100">
         <div className="d-flex justify-content-between align-items-center">
-          <a
-            href={user_id === loggedUserId ? "/profile" : `/user/${user_id}`}
-            className="text-decoration-none text-body"
-          >
-            <h6 className="fw-bold">
-              {user?.fullName}
-              {edited ? (
-                <small className="fw-normal">
-                  <i> - Edited</i>
-                </small>
-              ) : (
-                ""
-              )}
-            </h6>
-          </a>
+          <div className="d-flex gap-2">
+            <a
+              href={user_id === loggedUserId ? "/profile" : `/user/${user_id}`}
+              className="text-decoration-none text-body"
+            >
+              <h6 className="fw-bold">{user?.fullName}</h6>
+            </a>
+            {edited ? (
+              <small className="fw-normal">
+                <i>- Edited</i>
+              </small>
+            ) : (
+              ""
+            )}
+          </div>
           {user_id === loggedUserId && !editing && (
             <div className="dropdown">
               <button
@@ -135,8 +135,8 @@ const Comment: React.FC<CommentProps> = ({
                   alt=""
                 />
               </button>
-              <ul className="dropdown-menu p-1  ">
-                <li className="m-0">
+              <ul className="dropdown-menu p-1">
+                <li>
                   <button
                     className="dropdown-item d-flex align-items-center gap-1"
                     onClick={() => setEditing(true)}
