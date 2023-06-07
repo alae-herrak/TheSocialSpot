@@ -23,7 +23,7 @@ export const createPostLike = async (target_id: number, user_id: number) => {
 };
 
 export const getPostLikeCount = async (target_id: number) => {
-  return await API.get<LikeCount>(`/likeCount/${target_id}`);
+  return await API.get<LikeCount>(`/post/likeCount/${target_id}`);
 };
 
 export const getPostLikeUserIds = async (target_id: number) => {
@@ -45,7 +45,7 @@ export const createCommentLike = async (target_id: number, user_id: number) => {
 };
 
 export const getCommentLikeCount = async (target_id: number) => {
-  return await API.get<LikeCount>(`/likeCount/${target_id}`);
+  return await API.get<LikeCount>(`/comment/likeCount/${target_id}`);
 };
 
 export const getCommentLikeUserIds = async (target_id: number) => {

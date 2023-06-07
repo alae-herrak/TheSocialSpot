@@ -21,10 +21,18 @@ export const getLikeById = async (like_id) => {
   return result[0];
 };
 
-export const getLikeCountOfTargetId = async (target_id) => {
+export const getPostLikeCountOfTargetId = async (target_id) => {
   const [result] = await pool.query(
-    "SELECT count(*) FROM likes WHERE target_id = ?",
-    [target_id]
+    "SELECT count(*) FROM likes WHERE target_id = ? and type = ?",
+    [target_id, "post"]
+  );
+  return result[0];
+};
+
+export const getCommentLikeCountOfTargetId = async (target_id) => {
+  const [result] = await pool.query(
+    "SELECT count(*) FROM likes WHERE target_id = ? and type = ?",
+    [target_id, "comment"]
   );
   return result[0];
 };

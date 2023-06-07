@@ -3,9 +3,10 @@ import {
   _createLike,
   _deleteLike,
   _getAllLikes,
+  _getCommentLikeCountOfTargetId,
   _getLikeById,
-  _getLikeCountOfTargetId,
   _getLikeId,
+  _getPostLikeCountOfTargetId,
   _getTargetIdUsers,
 } from "../Controllers/like.js";
 import auth from "../middleware/auth.js";
@@ -18,7 +19,8 @@ router.post("/", auth, _createLike);
 // GET Requests
 router.get("/", auth, _getAllLikes);
 router.get("/like_id/:like_id", auth, _getLikeById);
-router.get("/likeCount/:target_id", auth, _getLikeCountOfTargetId);
+router.get("/post/likeCount/:target_id", auth, _getPostLikeCountOfTargetId);
+router.get("/comment/likeCount/:target_id", auth, _getCommentLikeCountOfTargetId);
 router.get("/userIds/:target_id", auth, _getTargetIdUsers);
 router.get("/like_id", auth, _getLikeId);
 

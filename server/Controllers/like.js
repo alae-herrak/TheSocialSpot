@@ -2,9 +2,10 @@ import {
   createLike,
   deleteLike,
   getAllLikes,
+  getCommentLikeCountOfTargetId,
   getLikeById,
-  getLikeCountOfTargetId,
   getLikeId,
+  getPostLikeCountOfTargetId,
   getTargetIdUsers,
 } from "../Database/like.js";
 
@@ -37,10 +38,20 @@ export const _getLikeById = async (req, res) => {
   }
 };
 
-export const _getLikeCountOfTargetId = async (req, res) => {
+export const _getPostLikeCountOfTargetId = async (req, res) => {
   try {
     const { target_id } = req.params;
-    const likes = await getLikeCountOfTargetId(target_id);
+    const likes = await getPostLikeCountOfTargetId(target_id);
+    res.send(likes);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const _getCommentLikeCountOfTargetId = async (req, res) => {
+  try {
+    const { target_id } = req.params;
+    const likes = await getCommentLikeCountOfTargetId(target_id);
     res.send(likes);
   } catch (error) {
     res.send(error);
