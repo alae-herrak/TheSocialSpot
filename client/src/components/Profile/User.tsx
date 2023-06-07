@@ -73,6 +73,7 @@ const UserProfile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) 
             user_id1={user.user_id!}
             user_id2={targetUser?.user_id!}
             setIsFriend={setIsFriend}
+            theme={theme}
           />
         </div>
         <div className="col-12 col-md-8 p-0 px-md-2 my-2">
@@ -84,7 +85,7 @@ const UserProfile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) 
                 </div>
               )}
               {!posts.length && (
-                <div className="w-100 d-flex justify-content-center align-items-center">
+                <div className="w-100 d-flex justify-content-center align-items-center p-5">
                   <b>{targetUser?.fullName}</b>&nbsp;hasn't posted yet.
                 </div>
               )}

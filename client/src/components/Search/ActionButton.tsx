@@ -8,12 +8,13 @@ import {
   updateRelation,
 } from "../../api/relation";
 import { ActionButtonProps, Relation } from "../../types";
-import { Info } from "../../assets/images";
+import { InfoLight, InfoDark } from "../../assets/images";
 
 const ActionButton: React.FC<ActionButtonProps> = ({
   user_id1,
   user_id2,
   setIsFriend,
+  theme,
 }) => {
   const navigate = useNavigate();
 
@@ -152,7 +153,10 @@ const ActionButton: React.FC<ActionButtonProps> = ({
           data-bs-placement="top"
           data-bs-title="You can block or unblock users from the settings page"
         >
-          <img src={Info} className="width-1-5rem" />
+          <img
+            src={theme === "dark" ? InfoLight : InfoDark}
+            className="width-1-5rem"
+          />
         </i>
       )}
     </div>
