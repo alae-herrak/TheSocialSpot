@@ -6,6 +6,8 @@ import {
   Delete,
   DotsDark,
   DotsLight,
+  EditDark,
+  EditLight,
   HeartDark,
   HeartFull,
   HeartLight,
@@ -30,6 +32,7 @@ const Comment: React.FC<CommentProps> = ({
   const [user, setUser] = useState<User>();
   const [userLiked, setUserLiked] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number>(0);
+  const [editing, setEditing] = useState<boolean>(false)
 
   useEffect(() => {
     getUserById(user_id).then((res) => setUser(res.data));
@@ -43,6 +46,8 @@ const Comment: React.FC<CommentProps> = ({
       }
     });
   }, []);
+
+  const handleEditComment = () => {};
 
   const handleDeleteComment = () => {
     deleteComment(comment_id).then((res) => {
@@ -105,7 +110,20 @@ const Comment: React.FC<CommentProps> = ({
                   alt=""
                 />
               </button>
-              <ul className="dropdown-menu">
+              <ul className="dropdown-menu p-1  ">
+                <li className="m-0">
+                  <button
+                    className="dropdown-item d-flex align-items-center gap-1"
+                    onClick={handleEditComment}
+                  >
+                    <img
+                      src={theme === "dark" ? EditLight : EditDark}
+                      className="width-1-5rem"
+                      alt=""
+                    />
+                    Edit
+                  </button>
+                </li>
                 <li>
                   <button
                     className="dropdown-item d-flex align-items-center gap-1 text-danger"

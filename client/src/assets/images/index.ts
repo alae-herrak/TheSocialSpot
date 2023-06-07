@@ -20,3 +20,5 @@ export { default as InfoDark } from "./info-dark.png";
 export { default as DotsDark } from "./dots-dark.png";
 export { default as DotsLight } from "./dots-light.png";
 export { default as Delete } from "./delete.png";
+export { default as EditLight } from "./edit-light.png";
+export { default as EditDark } from "./edit-dark.png";
