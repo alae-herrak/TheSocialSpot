@@ -24,6 +24,10 @@ export const getCommentsCountOfPostId = async (post_id: number) => {
   return await API.get<CommentCount>(`/post_id/${post_id}/commentCount`);
 };
 
+export const updateComment = async (comment_id: number, comment: string) => {
+  return await API.patch<Comment>("/", { comment_id, comment });
+};
+
 export const deleteComment = async (comment_id: number) => {
   return await API.delete<boolean>("/", { data: { comment_id } });
 };

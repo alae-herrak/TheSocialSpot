@@ -5,6 +5,7 @@ import {
   getCommentById,
   getCommentsCountOfPostId,
   getCommentsOfPostId,
+  updateComment,
 } from "../Database/comment.js";
 
 export const _createComment = async (req, res) => {
@@ -51,6 +52,16 @@ export const _getCommentsCountOfPostId = async (req, res) => {
     const { post_id } = req.params;
     const count = await getCommentsCountOfPostId(post_id);
     res.send(count);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const _updateComment = async (req, res) => {
+  try {
+    const { comment_id, comment } = req.body;
+    const updatedComment = await updateComment(comment_id, comment);
+    res.send(updatedComment);
   } catch (error) {
     res.send(error);
   }

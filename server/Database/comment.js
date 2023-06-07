@@ -38,6 +38,14 @@ export const getCommentsCountOfPostId = async (post_id) => {
   return result[0];
 };
 
+export const updateComment = async (comment_id, comment) => {
+  const [result] = await pool.query(
+    "UPDATE comments SET comment = ?, edited = ? WHERE comment_id = ?",
+    [comment, true, comment_id]
+  );
+  return getCommentById(comment_id);
+};
+
 export const deleteComment = async (comment_id) => {
   const [result] = await pool.query(
     "DELETE FROM comments WHERE comment_id = ?",

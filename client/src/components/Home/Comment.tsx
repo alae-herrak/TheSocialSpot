@@ -12,7 +12,7 @@ import {
   HeartFull,
   HeartLight,
 } from "../../assets/images";
-import { deleteComment } from "../../api/comment";
+import { deleteComment, updateComment } from "../../api/comment";
 import {
   createCommentLike,
   deleteLike,
@@ -25,6 +25,7 @@ const Comment: React.FC<CommentProps> = ({
   comment_id,
   user_id,
   comment,
+  edited,
   theme,
   loggedUserId,
   setComments,
@@ -32,7 +33,8 @@ const Comment: React.FC<CommentProps> = ({
   const [user, setUser] = useState<User>();
   const [userLiked, setUserLiked] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number>(0);
-  const [editing, setEditing] = useState<boolean>(false)
+  const [editing, setEditing] = useState<boolean>(false);
+  const [newComment, setnewComment] = useState<string>(comment);
 
   useEffect(() => {
     getUserById(user_id).then((res) => setUser(res.data));
@@ -47,7 +49,21 @@ const Comment: React.FC<CommentProps> = ({
     });
   }, []);
 
-  const handleEditComment = () => {};
+  const handleEditComment = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (comment === newComment) return setEditing(false);
+    if (newComment.trim() === "") return;
+    updateComment(comment_id, newComment)
+      .then((res) => {
+        if (res.data)
+          setComments((prev) => [
+            res.data,
+            ...prev.filter((c) => c.comment_id !== comment_id),
+          ]);
+        setEditing(false);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleDeleteComment = () => {
     deleteComment(comment_id).then((res) => {
@@ -94,9 +110,18 @@ const Comment: React.FC<CommentProps> = ({
             href={user_id === loggedUserId ? "/profile" : `/user/${user_id}`}
             className="text-decoration-none text-body"
           >
-            <h6 className="fw-bold">{user?.fullName}</h6>
+            <h6 className="fw-bold">
+              {user?.fullName}
+              {edited ? (
+                <small className="fw-normal">
+                  <i> - Edited</i>
+                </small>
+              ) : (
+                ""
+              )}
+            </h6>
           </a>
-          {user_id === loggedUserId && (
+          {user_id === loggedUserId && !editing && (
             <div className="dropdown">
               <button
                 className="btn p-0 d-flex align-items-center border-0"
@@ -114,7 +139,7 @@ const Comment: React.FC<CommentProps> = ({
                 <li className="m-0">
                   <button
                     className="dropdown-item d-flex align-items-center gap-1"
-                    onClick={handleEditComment}
+                    onClick={() => setEditing(true)}
                   >
                     <img
                       src={theme === "dark" ? EditLight : EditDark}
@@ -137,26 +162,50 @@ const Comment: React.FC<CommentProps> = ({
             </div>
           )}
         </div>
-        <p className="m-0">{comment}</p>
-        <div className="mt-2">
-          <button
-            className="btn p-0 d-flex align-items-center border-0"
-            onClick={() => handleLikeButtonClick()}
-          >
-            <img
-              src={
-                userLiked
-                  ? HeartFull
-                  : theme === "dark"
-                  ? HeartLight
-                  : HeartDark
-              }
-              className="width-1-5rem me-1"
-              alt=""
+        {editing ? (
+          <form className="w-100" onSubmit={handleEditComment}>
+            <input
+              type="text"
+              className="form-control mb-2"
+              name="comment"
+              value={newComment}
+              onChange={(e) => setnewComment(e.target.value)}
             />
-            {likeCount}
-          </button>
-        </div>
+            <button
+              type="button"
+              className="btn btn-sm btn-secondary me-1"
+              onClick={() => setEditing(false)}
+            >
+              Cancel
+            </button>
+            <button type="submit" className="btn btn-sm btn-primary">
+              Save
+            </button>
+          </form>
+        ) : (
+          <>
+            <p className="m-0">{comment}</p>
+            <div className="mt-2">
+              <button
+                className="btn p-0 d-flex align-items-center border-0"
+                onClick={() => handleLikeButtonClick()}
+              >
+                <img
+                  src={
+                    userLiked
+                      ? HeartFull
+                      : theme === "dark"
+                      ? HeartLight
+                      : HeartDark
+                  }
+                  className="width-1-5rem me-1"
+                  alt=""
+                />
+                {likeCount}
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ const PostComments: React.FC<PostCommentsProps> = ({
       post_id,
       user_id: loggedUserId,
       comment,
-      edited: undefined,
+      edited: false,
     };
     createComment(newComment)
       .then((res) => {
@@ -78,6 +78,7 @@ const PostComments: React.FC<PostCommentsProps> = ({
                     comment_id={c.comment_id!}
                     user_id={c.user_id}
                     comment={c.comment}
+                    edited={c.edited}
                     theme={theme}
                     loggedUserId={loggedUserId}
                     setComments={setComments}

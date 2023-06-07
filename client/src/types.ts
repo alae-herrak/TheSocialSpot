@@ -111,7 +111,7 @@ export type Comment = {
   post_id: number;
   user_id: number;
   comment: string;
-  edited: boolean | undefined;
+  edited: boolean;
 };
 
 export type CommentCount = {
@@ -129,6 +129,7 @@ export type CommentProps = {
   comment_id: number;
   user_id: number;
   comment: string;
+  edited: boolean;
   theme: string;
   loggedUserId: number;
   setComments: React.Dispatch<React.SetStateAction<Comment[]>>
