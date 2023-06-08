@@ -8,10 +8,11 @@ import {
 
 export const _createNotification = async (req, res) => {
   try {
-    const { event, user_id1, user_id2, ressource_id } = req.body;
+    const { user_id } = req.user;
+    const { event, user_id2, ressource_id } = req.body;
     const newNotification = await createNotification(
       event,
-      user_id1,
+      user_id,
       user_id2,
       ressource_id
     );
@@ -22,13 +23,13 @@ export const _createNotification = async (req, res) => {
 };
 
 export const _getAllNotifications = async (req, res) => {
-    try {
-        const notifications = await getAllNotifications()
-        res.send(notifications);
-    } catch (error) {
-        res.send(error);
-    }
-}
+  try {
+    const notifications = await getAllNotifications();
+    res.send(notifications);
+  } catch (error) {
+    res.send(error);
+  }
+};
 
 export const _getNotificationById = async (req, res) => {
   try {
@@ -42,7 +43,7 @@ export const _getNotificationById = async (req, res) => {
 
 export const _getNotificationsOfUserId = async (req, res) => {
   try {
-    const { user_id } = req.params;
+    const { user_id } = req.user;
     const notifications = await getNotificationsOfUserId(user_id);
     res.send(notifications);
   } catch (error) {

@@ -11,12 +11,12 @@ import {
 const router = express.Router();
 
 // POST Requests
-router.post("/", _createNotification);
+router.post("/", auth, _createNotification);
 
 // GET Requests
-router.get("/", _getAllNotifications);
-router.get("/notification_id/:notification_id", _getNotificationById);
-router.get("/user_id/:user_id", _getNotificationsOfUserId);
+router.get("/", auth, _getAllNotifications);
+router.get("/notification_id/:notification_id", auth, _getNotificationById);
+router.get("/user_id", auth, _getNotificationsOfUserId);
 
 // DELETE Requests
 router.delete("/", _deleteNotification);
