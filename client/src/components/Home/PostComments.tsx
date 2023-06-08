@@ -4,12 +4,14 @@ import { CommentDark, CommentLight } from "../../assets/images";
 import { PostCommentsProps, Comment } from "../../types";
 import { createComment, getCommentsOfPostId } from "../../api/comment";
 import COMMENT from "./Comment";
+import { createNotification } from "../../api/notification";
 
 const PostComments: React.FC<PostCommentsProps> = ({
   post_id,
   commentCount,
   theme,
   loggedUserId,
+  user_id,
 }) => {
   const [comment, setComment] = useState<string>("");
   const [comments, setComments] = useState<Comment[]>([]);
@@ -32,6 +34,14 @@ const PostComments: React.FC<PostCommentsProps> = ({
       .then((res) => {
         setComments((prev) => [res.data, ...prev]);
         setComment("");
+        loggedUserId !== user_id &&
+          createNotification({
+            notification_id: undefined,
+            event: "comment",
+            user_id1: loggedUserId,
+            user_id2: user_id,
+            ressource_id: post_id,
+          });
       })
       .catch((err) => console.log(err));
   };
@@ -82,6 +92,8 @@ const PostComments: React.FC<PostCommentsProps> = ({
                     theme={theme}
                     loggedUserId={loggedUserId}
                     setComments={setComments}
+                    postUser_id={user_id}
+                    post_id={post_id}
                   />
                 ))}
               </div>

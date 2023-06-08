@@ -85,13 +85,16 @@ const Navbar: React.FC = () => {
               </form>
             </li>
             <li className="nav-item dropdown me-4">
-              <img
-                src={NotificationIcon}
-                className="width-1-5rem"
-                role="button"
-                data-bs-toggle="modal"
-                data-bs-target="#notifications"
-              />
+              <button className="btn border-0 p-0">
+                <img
+                  src={NotificationIcon}
+                  className="width-1-5rem"
+                  role="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#notifications"
+                />
+                <span className="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+              </button>
               <div
                 className="modal fade"
                 id="notifications"

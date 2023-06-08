@@ -4,6 +4,7 @@ import {
   getAllNotifications,
   getNotificationById,
   getNotificationsOfUserId,
+  openNotificationsOfUserId,
 } from "../Database/notification.js";
 
 export const _createNotification = async (req, res) => {
@@ -51,10 +52,25 @@ export const _getNotificationsOfUserId = async (req, res) => {
   }
 };
 
+export const _openNotificationsOfUserId = async (req, res) => {
+  try {
+    const { user_id } = req.user;
+    const result = await openNotificationsOfUserId(user_id);
+    res.send(result);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
 export const _deleteNotification = async (req, res) => {
   try {
-    const { notification_id } = req.body;
-    const deleted = await deleteNotification(notification_id);
+    const { event, user_id1, user_id2, ressource_id } = req.body;
+    const deleted = await deleteNotification(
+      event,
+      user_id1,
+      user_id2,
+      ressource_id
+    );
     res.send(deleted);
   } catch (error) {
     res.send(error);

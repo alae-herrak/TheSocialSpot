@@ -6,6 +6,7 @@ import {
   _getAllNotifications,
   _getNotificationById,
   _getNotificationsOfUserId,
+  _openNotificationsOfUserId,
 } from "../Controllers/notification.js";
 
 const router = express.Router();
@@ -17,6 +18,9 @@ router.post("/", auth, _createNotification);
 router.get("/", auth, _getAllNotifications);
 router.get("/notification_id/:notification_id", auth, _getNotificationById);
 router.get("/user_id", auth, _getNotificationsOfUserId);
+
+// PATCH Requests
+router.patch("/openNotifications", auth, _openNotificationsOfUserId);
 
 // DELETE Requests
 router.delete("/", _deleteNotification);

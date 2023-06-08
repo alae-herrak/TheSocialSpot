@@ -24,6 +24,7 @@ import {
 import PostLikes from "./PostLikes";
 import PostComments from "./PostComments";
 import { getCommentsCountOfPostId } from "../../api/comment";
+import { createNotification, deleteNotification } from "../../api/notification";
 
 const Post = ({
   loggedUserId,
@@ -80,11 +81,21 @@ const Post = ({
           setUserLiked(false);
         });
       });
+      loggedUserId !== user_id &&
+        deleteNotification("postLike", loggedUserId, user_id!, post_id);
     } else {
       createPostLike(post_id, loggedUserId).then(() => {
         setLikeCount((prev) => prev + 1);
         setUserLiked(true);
       });
+      loggedUserId !== user_id &&
+        createNotification({
+          notification_id: undefined,
+          event: "postLike",
+          user_id1: loggedUserId,
+          user_id2: user_id!,
+          ressource_id: post_id,
+        });
     }
   };
 
@@ -291,6 +302,7 @@ const Post = ({
               commentCount={commentCount}
               theme={theme}
               loggedUserId={loggedUserId}
+              user_id={user_id!}
             />
           </div>
         </>

@@ -20,6 +20,7 @@ import {
   getCommentLikeUserIds,
   getLikeId,
 } from "../../api/like";
+import { createNotification, deleteNotification } from "../../api/notification";
 
 const Comment: React.FC<CommentProps> = ({
   comment_id,
@@ -29,6 +30,8 @@ const Comment: React.FC<CommentProps> = ({
   theme,
   loggedUserId,
   setComments,
+  postUser_id,
+  post_id,
 }) => {
   const [user, setUser] = useState<User>();
   const [userLiked, setUserLiked] = useState<boolean>(false);
@@ -67,10 +70,13 @@ const Comment: React.FC<CommentProps> = ({
 
   const handleDeleteComment = () => {
     deleteComment(comment_id).then((res) => {
-      if (res.data)
+      if (res.data) {
         setComments((prev) => [
           ...prev.filter((comment) => comment.comment_id !== comment_id),
         ]);
+        loggedUserId !== postUser_id &&
+          deleteNotification("comment", loggedUserId, postUser_id, post_id);
+      }
     });
   };
 
@@ -80,12 +86,22 @@ const Comment: React.FC<CommentProps> = ({
         deleteLike(res.data["like_id"]).then(() => {
           setLikeCount((prev) => prev - 1);
           setUserLiked(false);
+          loggedUserId !== user_id &&
+            deleteNotification("commentLike", loggedUserId, user_id, post_id);
         });
       });
     } else {
       createCommentLike(comment_id, loggedUserId).then(() => {
         setLikeCount((prev) => prev + 1);
         setUserLiked(true);
+        loggedUserId !== user_id &&
+          createNotification({
+            notification_id: undefined,
+            event: "commentLike",
+            user_id1: loggedUserId,
+            user_id2: user_id,
+            ressource_id: post_id,
+          });
       });
     }
   };

@@ -9,6 +9,7 @@ import {
 } from "../../api/relation";
 import { ActionButtonProps, Relation } from "../../types";
 import { InfoLight, InfoDark } from "../../assets/images";
+import { createNotification, deleteNotification } from "../../api/notification";
 
 const ActionButton: React.FC<ActionButtonProps> = ({
   user_id1,
@@ -65,6 +66,13 @@ const ActionButton: React.FC<ActionButtonProps> = ({
           if (res.data) {
             setAction("Cancel request");
             setLoading(false);
+            createNotification({
+              notification_id: undefined,
+              event: "invite",
+              user_id1,
+              user_id2,
+              ressource_id: res.data.relation_id!,
+            });
           }
         })
         .catch((err) => {
@@ -81,6 +89,13 @@ const ActionButton: React.FC<ActionButtonProps> = ({
             setAction("View profile");
             setLoading(false);
             setIsFriend!(true);
+            createNotification({
+              notification_id: undefined,
+              event: "inviteAccepted",
+              user_id1,
+              user_id2,
+              ressource_id: res.data.relation_id!,
+            });
           }
         })
         .catch((err) => {
@@ -103,6 +118,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({
           console.log(err);
           alert("There has been an error");
         });
+      deleteNotification("invite", user_id1, user_id2, relationId!);
     }
   };
 

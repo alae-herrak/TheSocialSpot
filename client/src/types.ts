@@ -124,6 +124,7 @@ export type PostCommentsProps = {
   commentCount: number;
   theme: string;
   loggedUserId: number;
+  user_id: number;
 };
 
 export type CommentProps = {
@@ -133,5 +134,15 @@ export type CommentProps = {
   edited: boolean;
   theme: string;
   loggedUserId: number;
-  setComments: React.Dispatch<React.SetStateAction<Comment[]>>
-}
+  setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
+  postUser_id: number;
+  post_id: number;
+};
+
+export type Notification = {
+  notification_id: number | undefined;
+  event: "postLike" | "commentLike" | "comment" | "invite" | "inviteAccepted";
+  user_id1: number;
+  user_id2: number;
+  ressource_id: number;
+};

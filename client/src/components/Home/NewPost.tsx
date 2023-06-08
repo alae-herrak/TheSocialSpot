@@ -8,6 +8,7 @@ const NewPost = ({ user, theme, setPosts }: UserThemeUpdateFeedProps) => {
   const [textContent, setTextContent] = useState<string>("");
   const [photo, setPhoto] = useState<string>("");
   const [postable, setPostable] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
     setPostable(textContent === "" && photo === "" ? false : true);
@@ -32,6 +33,7 @@ const NewPost = ({ user, theme, setPosts }: UserThemeUpdateFeedProps) => {
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!postable) return;
+    setLoading(true);
     const post: PostToCreate = {
       user_id: user.user_id!,
       textContent,
@@ -44,6 +46,7 @@ const NewPost = ({ user, theme, setPosts }: UserThemeUpdateFeedProps) => {
         setPosts((prev) => [res.data, ...prev]);
         setTextContent("");
         setPhoto("");
+        setLoading(false)
       })
       .catch((err) => console.log(err));
   };
@@ -113,6 +116,7 @@ const NewPost = ({ user, theme, setPosts }: UserThemeUpdateFeedProps) => {
               className="btn btn-primary"
             >
               Post
+              {loading && <div className="spinner-border spinner-border-sm ms-1"></div>}
             </button>
           </div>
         </div>
