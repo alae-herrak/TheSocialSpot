@@ -21,6 +21,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({
   const [action, setAction] = useState<string>("");
   const [relationId, setRelationId] = useState<number>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [confirmation, setConfirmation] = useState<boolean>(false);
 
   const location = window.location.pathname.substring(0, 5);
 
@@ -103,25 +104,22 @@ const ActionButton: React.FC<ActionButtonProps> = ({
           alert("There has been an error");
         });
     }
-    if (action === "Remove friend") {
-      setLoading(true);
-      deleteRelation(relationId!)
-        .then((res) => {
-          if (res.data) {
-            setAction("Add friend");
-            setLoading(false);
-            setIsFriend!(false);
-          }
-        })
-        .catch((err) => {
-          setLoading(false);
-          console.log(err);
-          alert("There has been an error");
-        });
-    }
-    if (action === "Blocked") {
-    }
   };
+
+  confirmation &&
+    deleteRelation(relationId!)
+      .then((res) => {
+        if (res.data) {
+          setAction("Add friend");
+          setLoading(false);
+          setIsFriend!(false);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+        alert("There has been an error");
+      });
 
   const tooltipTriggerList = document.querySelectorAll(
     '[data-bs-toggle="tooltip"]'
@@ -131,35 +129,91 @@ const ActionButton: React.FC<ActionButtonProps> = ({
     (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
   );
 
+  const btnProps =
+    action === "Remove friend"
+      ? {
+          "data-bs-toggle": "modal",
+          "data-bs-target": "#confirmationModal",
+        }
+      : {};
+
   return (
-    <div className="d-flex align-items-center gap-2">
-      <button
-        onClick={handleButtonClick}
-        disabled={action === "Blocked" ? true : false}
-        className={`btn btn-${
-          action === "View profile"
-            ? "primary"
-            : action === "Blocked"
-            ? "danger"
-            : "secondary"
-        } btn-sm d-flex align-items-center gap-2`}
-      >
-        <span>{action}</span>
-        {loading && <div className="spinner-border spinner-border-sm"></div>}
-      </button>
-      {action === "Blocked" && location === "/user" && (
-        <i
-          data-bs-toggle="tooltip"
-          data-bs-placement="top"
-          data-bs-title="You can block or unblock users from the settings page"
+    <>
+      <div className="d-flex align-items-center gap-2">
+        <button
+          onClick={handleButtonClick}
+          disabled={action === "Blocked" ? true : false}
+          {...btnProps}
+          className={`btn btn-${
+            action === "View profile"
+              ? "primary"
+              : action === "Blocked"
+              ? "danger"
+              : "secondary"
+          } btn-sm d-flex align-items-center gap-2`}
         >
-          <img
-            src={theme === "dark" ? InfoLight : InfoDark}
-            className="width-1-5rem"
-          />
-        </i>
-      )}
-    </div>
+          <span>{action}</span>
+          {loading && <div className="spinner-border spinner-border-sm"></div>}
+        </button>
+        {action === "Blocked" && location === "/user" && (
+          <i
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            data-bs-title="You can block or unblock users from the settings page"
+          >
+            <img
+              src={theme === "dark" ? InfoLight : InfoDark}
+              className="width-1-5rem"
+            />
+          </i>
+        )}
+      </div>
+      <div
+        className="modal fade"
+        id="confirmationModal"
+        tabIndex={-1}
+        aria-labelledby="confirmationModal"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">
+                Confirm your choice
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              Remove this person from friend list?
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cacnel
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                data-bs-dismiss="modal"
+                onClick={() => {
+                  setConfirmation(true);
+                }}
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

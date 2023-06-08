@@ -65,13 +65,11 @@ const Post = ({
   }, []);
 
   const handleDeletePost = () => {
-    const confirmation = confirm("Are you sure you want to delete this post?");
-    confirmation &&
-      deletePost(post_id)
-        .then(() => {
-          setPosts!((prev) => prev.filter((p) => p.post_id !== post_id));
-        })
-        .catch((err) => console.log(err));
+    deletePost(post_id)
+      .then(() => {
+        setPosts!((prev) => prev.filter((p) => p.post_id !== post_id));
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleLikeButtonClick = () => {
@@ -185,7 +183,8 @@ const Post = ({
               <li>
                 <button
                   className="dropdown-item d-flex align-items-center gap-1 text-danger"
-                  onClick={handleDeletePost}
+                  data-bs-toggle="modal"
+                  data-bs-target="#confirmationModal"
                 >
                   <img src={Delete} className="width-1-5rem" alt="" />
                   Delete
@@ -296,6 +295,47 @@ const Post = ({
           </div>
         </>
       )}
+      <div
+        className="modal fade"
+        id="confirmationModal"
+        tabIndex={-1}
+        aria-labelledby="confirmationModal"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">
+                Confirm your choice
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">Delete this post?</div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cacnel
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                data-bs-dismiss="modal"
+                onClick={handleDeletePost}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

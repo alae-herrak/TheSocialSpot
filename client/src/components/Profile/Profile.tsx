@@ -48,7 +48,7 @@ const Profile: React.FC<UserThemeProps> = ({ user, theme }: UserThemeProps) => {
             </div>
           )}
           {!posts.length && (
-            <div className="w-100 d-flex justify-content-center align-items-center">
+            <div className="w-100 d-flex justify-content-center align-items-center p-5">
               You have no posts
             </div>
           )}
