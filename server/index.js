@@ -6,6 +6,7 @@ import PostRouter from "./Routes/post.js";
 import RelationRouter from "./Routes/relation.js";
 import LikeRouter from "./Routes/like.js";
 import CommentRouter from "./Routes/comment.js";
+import NotificationRouter from "./Routes/notification.js";
 
 const app = express();
 const PORT = 5000;
@@ -18,6 +19,7 @@ app.use("/posts", PostRouter);
 app.use("/relations", RelationRouter);
 app.use("/likes", LikeRouter);
 app.use("/comments", CommentRouter);
+app.use("/notifications", NotificationRouter);
 
 app.listen(PORT, () =>
   console.log(`Server running on: http://localhost:${PORT}`)
