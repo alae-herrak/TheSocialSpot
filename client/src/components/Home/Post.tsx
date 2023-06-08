@@ -322,7 +322,7 @@ const Post = ({
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
-                Cacnel
+                Cancel
               </button>
               <button
                 type="button"
