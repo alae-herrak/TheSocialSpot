@@ -29,7 +29,7 @@ export const getNotificationById = async (notification_id) => {
 
 export const getNotificationsOfUserId = async (user_id) => {
   const [result] = await pool.query(
-    "SELECT * FROM notifications WHERE user_id2 = ?",
+    "SELECT * FROM notifications WHERE user_id2 = ? LIMIT 30",
     [user_id]
   );
   return result;
@@ -37,8 +37,8 @@ export const getNotificationsOfUserId = async (user_id) => {
 
 export const openNotificationsOfUserId = async (user_id) => {
   const [result] = await pool.query(
-    "UPDATE notifications SET opened = ? WHERE user_id1 = ?",
-    [user_id, true]
+    "UPDATE notifications SET opened = ? WHERE user_id2 = ?",
+    [true, user_id]
   );
   return result;
 };

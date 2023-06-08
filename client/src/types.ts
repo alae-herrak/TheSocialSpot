@@ -145,4 +145,5 @@ export type Notification = {
   user_id1: number;
   user_id2: number;
   ressource_id: number;
+  opened: boolean;
 };

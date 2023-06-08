@@ -95,6 +95,7 @@ const Post = ({
           user_id1: loggedUserId,
           user_id2: user_id!,
           ressource_id: post_id,
+          opened: false
         });
     }
   };

@@ -1,11 +1,12 @@
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { logout } from "../redux/userSlice";
 import { light, dark } from "../redux/themeSlice";
-import { RootState } from "../types";
+import { RootState, Notification } from "../types";
 import {
   NavLogo,
-  SearchIcon,
   NotificationIcon,
   ProfileDark,
   ProfileLight,
@@ -17,8 +18,10 @@ import {
   LogoutLight,
 } from "../assets/images";
 import { updateTheme } from "../api/user";
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import {
+  getNotificationsOfUser,
+  openNotificationsOfUser,
+} from "../api/notification";
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
@@ -27,7 +30,16 @@ const Navbar: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const theme = useSelector((state: RootState) => state.theme.theme);
 
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [openedNotifications, setOpenedNotifications] = useState<boolean>(true);
   const [searchTerm, setSearchTerm] = useState<string>("");
+
+  useEffect(() => {
+    getNotificationsOfUser().then((res) => {
+      setNotifications(res.data);
+      res.data.map((n) => !n.opened && setOpenedNotifications(false));
+    });
+  }, []);
 
   const handleUpdateTheme = () => {
     updateTheme(theme === "dark" ? "light" : "dark")
@@ -42,7 +54,6 @@ const Navbar: React.FC = () => {
       setSearchTerm(searchTerm.trim());
     }
   };
-
   return (
     <nav
       className={`navbar sticky-top ${
@@ -85,7 +96,13 @@ const Navbar: React.FC = () => {
               </form>
             </li>
             <li className="nav-item dropdown me-4">
-              <button className="btn border-0 p-0">
+              <button
+                className="btn border-0 p-0"
+                onClick={() => {
+                  openNotificationsOfUser();
+                  setOpenedNotifications(true);
+                }}
+              >
                 <img
                   src={NotificationIcon}
                   className="width-1-5rem"
@@ -93,7 +110,9 @@ const Navbar: React.FC = () => {
                   data-bs-toggle="modal"
                   data-bs-target="#notifications"
                 />
-                <span className="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+                {!openedNotifications && (
+                  <span className="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+                )}
               </button>
               <div
                 className="modal fade"
