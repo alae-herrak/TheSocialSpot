@@ -72,7 +72,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({
               user_id1,
               user_id2,
               ressource_id: res.data.relation_id!,
-              opened: false
+              opened: false,
             });
           }
         })
@@ -96,7 +96,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({
               user_id1,
               user_id2,
               ressource_id: res.data.relation_id!,
-              opened: false
+              opened: false,
             });
           }
         })

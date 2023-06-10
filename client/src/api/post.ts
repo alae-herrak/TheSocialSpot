@@ -20,6 +20,10 @@ export const getPostsOfUserId = async (user_id: number) => {
   return await API.get<Post[]>(`/user_id/${user_id}`);
 };
 
+export const getPostById = async (post_id: number) => {
+  return await API.get<Post>(`/post_id/${post_id}`);
+};
+
 export const updatePost = async (
   post_id: number,
   textContent: string,

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { PostProps, User } from "../../types";
 import {
@@ -26,7 +26,7 @@ import PostComments from "./PostComments";
 import { getCommentsCountOfPostId } from "../../api/comment";
 import { createNotification, deleteNotification } from "../../api/notification";
 
-const Post = ({
+const Post: React.FC<PostProps> = ({
   loggedUserId,
   theme,
   post_id,
@@ -38,7 +38,9 @@ const Post = ({
   edited,
   user_id,
   setPosts,
-}: PostProps) => {
+}) => {
+  const location = window.location.pathname.substring(0, 5);
+  const navigate = useNavigate();
   const postDate = new Date(date);
   const formatedDate = postDate.toDateString();
   const [user, setUser] = useState<User>();
@@ -68,6 +70,7 @@ const Post = ({
   const handleDeletePost = () => {
     deletePost(post_id)
       .then(() => {
+        if (location === "/post") return navigate("/");
         setPosts!((prev) => prev.filter((p) => p.post_id !== post_id));
       })
       .catch((err) => console.log(err));
@@ -95,7 +98,7 @@ const Post = ({
           user_id1: loggedUserId,
           user_id2: user_id!,
           ressource_id: post_id,
-          opened: false
+          opened: false,
         });
     }
   };
@@ -122,11 +125,14 @@ const Post = ({
     if (textContent.trim() === "" && newPhoto === "") return;
     updatePost(post_id, newTextContent, newPhoto)
       .then((res) => {
-        if (res.data)
-          setPosts!((prev) => [
-            res.data,
-            ...prev.filter((p) => p.post_id !== post_id),
-          ]);
+        if (res.data) {
+          if (location !== "/post")
+            setPosts!((prev) => [
+              res.data,
+              ...prev.filter((p) => p.post_id !== post_id),
+            ]);
+          else window.location.reload();
+        }
         setEditing(false);
       })
       .catch((err) => console.log(err));

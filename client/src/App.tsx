@@ -12,6 +12,7 @@ import {
   Search,
   User,
 } from "./components";
+import SinglePost from "./components/Home/SinglePost";
 
 function App() {
   const user = useSelector((state: RootState) => state.user.user);
@@ -42,6 +43,10 @@ function App() {
         <Route
           path="/user/:user_id"
           element={<User user={user!} theme={theme} />}
+        />
+        <Route
+          path="/post/:post_id"
+          element={<SinglePost user={user!} theme={theme}/>}
         />
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<Navigate to="/" />} />

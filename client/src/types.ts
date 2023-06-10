@@ -147,3 +147,13 @@ export type Notification = {
   ressource_id: number;
   opened: boolean;
 };
+
+export type NotificationsModalProps = {
+  notifications: Notification[];
+  theme: string;
+};
+
+export type NotificationProps = {
+  notification: Notification;
+  theme: string;
+}

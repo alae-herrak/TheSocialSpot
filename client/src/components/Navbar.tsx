@@ -22,6 +22,7 @@ import {
   getNotificationsOfUser,
   openNotificationsOfUser,
 } from "../api/notification";
+import NotificationsModal from "./Notifications/NotificationsModal";
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
@@ -118,51 +119,11 @@ const Navbar: React.FC = () => {
                 />
                 {!openedNotifications && (
                   <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                    {newNotificationsCount  }
+                    {newNotificationsCount <= 9 ? newNotificationsCount : "9+"}
                   </span>
                 )}
               </button>
-              <div
-                className="modal fade"
-                id="notifications"
-                tabIndex={-1}
-                aria-hidden="true"
-              >
-                <div className="modal-dialog">
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h1 className="modal-title fs-5">Notifications</h1>
-                      <button
-                        type="button"
-                        className="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button>
-                    </div>
-                    <div className="modal-body">
-                      <a
-                        className="dropdown-item d-flex justify-content-between align-items-center"
-                        href="#"
-                      >
-                        <div className="d-flex align-items-center">
-                          <img
-                            src=""
-                            alt=""
-                            className="width-2rem rounded-circle me-3"
-                          />
-                          <p className="m-0">alaeherrak liked your post</p>
-                        </div>
-                        <img src="" alt="" className="width-2rem" />
-                      </a>
-                    </div>
-                    <div className="modal-footer">
-                      <button type="button" className="btn btn-primary">
-                        All notifications
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <NotificationsModal notifications={notifications} theme={theme} />
             </li>
             <li className="nav-item dropdown">
               <img
