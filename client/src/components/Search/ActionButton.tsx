@@ -89,7 +89,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({
           if (res.data) {
             setAction("View profile");
             setLoading(false);
-            setIsFriend!(true);
+            setIsFriend && setIsFriend(true);
             createNotification({
               notification_id: undefined,
               event: "inviteAccepted",
@@ -130,7 +130,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({
         if (res.data) {
           setAction("Add friend");
           setLoading(false);
-          setIsFriend!(false);
+          setIsFriend && setIsFriend(false);
         }
       })
       .catch((err) => {
