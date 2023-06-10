@@ -12,7 +12,7 @@ const NotificationsModal: React.FC<NotificationsModalProps> = ({
       tabIndex={-1}
       aria-hidden="true"
     >
-      <div className="modal-dialog">
+      <div className="modal-dialog overflow-scroll height-75">
         <div className="modal-content">
           <div className="modal-header">
             <h1 className="modal-title fs-5">Notifications</h1>
@@ -31,11 +31,6 @@ const NotificationsModal: React.FC<NotificationsModalProps> = ({
                 theme={theme}
               />
             ))}
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-primary">
-              All notifications
-            </button>
           </div>
         </div>
       </div>
