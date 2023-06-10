@@ -32,12 +32,18 @@ const Navbar: React.FC = () => {
 
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [openedNotifications, setOpenedNotifications] = useState<boolean>(true);
+  const [newNotificationsCount, setNewNotificationsCount] = useState<number>(0);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
     getNotificationsOfUser().then((res) => {
       setNotifications(res.data);
-      res.data.map((n) => !n.opened && setOpenedNotifications(false));
+      res.data.map((n) => {
+        if (!n.opened) {
+          setOpenedNotifications(false);
+          setNewNotificationsCount((prev) => prev + 1);
+        }
+      });
     });
   }, []);
 
@@ -111,7 +117,9 @@ const Navbar: React.FC = () => {
                   data-bs-target="#notifications"
                 />
                 {!openedNotifications && (
-                  <span className="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {newNotificationsCount  }
+                  </span>
                 )}
               </button>
               <div
