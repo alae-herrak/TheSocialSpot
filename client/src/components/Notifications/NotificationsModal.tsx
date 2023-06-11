@@ -12,7 +12,7 @@ const NotificationsModal: React.FC<NotificationsModalProps> = ({
       tabIndex={-1}
       aria-hidden="true"
     >
-      <div className="modal-dialog overflow-scroll height-75">
+      <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
             <h1 className="modal-title fs-5">Notifications</h1>
@@ -24,13 +24,17 @@ const NotificationsModal: React.FC<NotificationsModalProps> = ({
             ></button>
           </div>
           <div className="modal-body">
-            {notifications.map((notification) => (
+            {
+            notifications.length ?
+            notifications.map((notification) => (
               <Notification
                 key={notification.notification_id}
                 notification={notification}
                 theme={theme}
               />
-            ))}
+            ))
+              : "No notifications"
+          }
           </div>
         </div>
       </div>

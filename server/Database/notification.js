@@ -29,7 +29,7 @@ export const getNotificationById = async (notification_id) => {
 
 export const getNotificationsOfUserId = async (user_id) => {
   const [result] = await pool.query(
-    "SELECT * FROM notifications WHERE user_id2 = ? LIMIT 30",
+    "SELECT * FROM notifications WHERE user_id2 = ? ORDER BY notification_id DESC LIMIT 30",
     [user_id]
   );
   return result;
