@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import POST from "./Post";
@@ -7,6 +7,8 @@ import { getPostById } from "../../api/post";
 import { getUserById } from "../../api/user";
 
 const SinglePost: React.FC<UserThemeProps> = ({ user, theme }) => {
+  const navigate = useNavigate()
+  if (!user.user_id) navigate('/login')
   const { post_id } = useParams<string>();
   const [post, setPost] = useState<Post>();
   const [postUser, setPostUser] = useState<User>();
