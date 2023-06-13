@@ -9,6 +9,7 @@ import { getUserById } from "../../api/user";
 const SinglePost: React.FC<UserThemeProps> = ({ user, theme }) => {
   const navigate = useNavigate()
   if (!user.user_id) navigate('/login')
+  
   const { post_id } = useParams<string>();
   const [post, setPost] = useState<Post>();
   const [postUser, setPostUser] = useState<User>();
